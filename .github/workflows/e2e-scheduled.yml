@@ -105,7 +105,11 @@ jobs:
 
       - name: Run E2E tests - ${{ matrix.suite }}
         working-directory: e2e
-
+        env:
+          mailgun-api-key: ${{ secrets.MAILGUN_SENDING_API_KEY }}
+          mailgun-domain: ${{ secrets.MAILGUN_DOMAIN }}
+          mailgun-from-email: ${{ secrets.MAILGUN_FROM_EMAIL }}
+          mailgun-mock-mode: ${{ secrets.MAILGUN_SENDING_API_KEY != '' && 'false' || 'true' }}
         run: |
           echo "Running scheduled tests for suite: ${{ matrix.suite }}"
           pnpm e2e:parallel staging:@${{ matrix.suite }}:chromeHeadless 4 || true

@@ -38,6 +38,22 @@ inputs:
     description: 'Number of days to retain artifacts'
     required: false
     default: '30'
+  mailgun-api-key:
+    description: 'Mailgun API key for email testing (use MAILGUN_SENDING_API_KEY secret)'
+    required: false
+    default: ''
+  mailgun-domain:
+    description: 'Mailgun domain for email testing'
+    required: false
+    default: ''
+  mailgun-from-email:
+    description: 'From email address for Mailgun (defaults to test@{domain} when empty)'
+    required: false
+    default: ''
+  mailgun-mock-mode:
+    description: 'Run Mailgun in mock mode - true means no real emails sent (safe default for CI/CD)'
+    required: false
+    default: 'true'
 
 outputs:
   test-result:
