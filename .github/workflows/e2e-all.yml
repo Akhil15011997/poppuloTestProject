@@ -48,6 +48,11 @@ env:
   PNPM_VERSION: '9.1.0'
   DOCKER_IMAGE: ghcr.io/akhil15011997/assessmentproject/e2e-tests:latest
 
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 jobs:
   determine-suites:
     name: Determine Test Suites

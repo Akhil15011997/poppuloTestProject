@@ -49,6 +49,11 @@ env:
   NODE_VERSION: '22'
   PNPM_VERSION: '9.1.0'
 
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 jobs:
   e2e-tests:
     name: E2E Tests - ${{ inputs.suite }} (${{ inputs.browser }})
