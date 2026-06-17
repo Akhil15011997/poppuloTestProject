@@ -137,14 +137,15 @@ pnpm run allure:serve
 ## 🐳 Docker (Alternative)
 
 ```bash
-# Build and run
+# Build and run tests (auto-generates Allure report)
 docker-compose build
 docker-compose up e2e-tests
 
 # Custom profile
 PROFILE=local:@auth:chromeHeadless docker-compose up e2e-tests
 ```
-
+# View Allure report after tests complete
+docker-compose up allure-report && open http://localhost:5050
 ---
 
 ## 📁 Key Files
@@ -198,6 +199,8 @@ This framework provides comprehensive E2E testing for [automationexercise.com](h
 
 ### CI/CD
 - ✅ **GitHub Actions** - Automated workflows
+  - `pr-checks.yml` - Lint + API smoke tests on PRs (fast, no browser)
+  - `e2e-all.yml` - Full E2E suite on merge to main
 - ✅ **Docker** - Containerized execution
 - ✅ **Allure Reports** - Rich test reporting
 

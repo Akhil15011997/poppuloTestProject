@@ -31,14 +31,6 @@ on:
   push:
     branches:
       - main
-      - develop
-    paths:
-      - 'e2e/**'
-      - '.github/workflows/e2e-*.yml'
-  pull_request:
-    branches:
-      - main
-      - develop
     paths:
       - 'e2e/**'
       - '.github/workflows/e2e-*.yml'

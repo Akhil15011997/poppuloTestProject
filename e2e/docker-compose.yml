@@ -1,7 +1,8 @@
 version: '3.8'
 
 services:
-  # Main E2E test service (Chrome only, single execution)
+  # Main E2E test service - UI and UI+API tests only
+  # CI=true automatically excludes @apiOnly, @performance, @playwrightMCP, @mcp tags
   e2e-tests:
     build:
       context: .
@@ -11,7 +12,7 @@ services:
       - CI=true
     volumes:
       - ./output:/app/output
-      - ./allure-results:/app/allure-results
+      - ./allure-results:/app/allure-reports
     # Use host network to fix DNS/connectivity issues
     network_mode: host
     command: sh -c "pnpm e2e $$PROFILE"
@@ -44,13 +45,10 @@ services:
   #   command: sh -c "pnpm e2e $$PROFILE"
 
   # Allure report server
+ # Allure report server - serves the generated HTML report
   allure-report:
-    image: frankescobar/allure-docker-service
+    image: nginx:alpine
     ports:
-      - "5050:5050"
+      - "5050:80"
     volumes:
-      - ./allure-results:/app/allure-results
-      - ./allure-report:/app/default-reports
-    environment:
-      CHECK_RESULTS_EVERY_SECONDS: 5
-      KEEP_HISTORY: 1
+      - ./allure-report:/usr/share/nginx/html:ro

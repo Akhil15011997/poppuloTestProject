@@ -551,20 +551,20 @@ sequenceDiagram
 flowchart TB
     subgraph Triggers[Triggers]
         pr["Pull Request"]
-        push["Push to main/develop"]
+        push["Push to main"]
         manual["Manual Dispatch"]
         schedule["Scheduled"]
     end
     
     subgraph Workflows[Workflows]
-        prChecks["pr-checks.yml\nLint + Syntax + Smoke"]
+        prChecks["pr-checks.yml\nLint + Syntax + API Smoke"]
         suite["e2e-suite.yml\nSingle Suite"]
         all["e2e-all.yml\nAll Suites Parallel"]
         scheduled["e2e-scheduled.yml\n6h + Nightly"]
     end
     
     pr --> prChecks
-    push --> prChecks
+    push --> all
     manual --> suite
     manual --> all
     schedule --> scheduled
@@ -574,9 +574,9 @@ flowchart TB
 
 | Workflow | Trigger | Description |
 |----------|---------|-------------|
-| `pr-checks.yml` | PR/Push | Lint ✓ Syntax ✓ Smoke tests |
+| `pr-checks.yml` | PR/Push | Lint ✓ Syntax ✓ API Smoke tests (no browser) |
 | `e2e-suite.yml` | Manual | Run single suite by tag |
-| `e2e-all.yml` | Manual/Push | Parallel suites + cross-browser |
+| `e2e-all.yml` | Manual/ to main | Full E2E Parallel suites (runs after merge to main) |
 | `e2e-scheduled.yml` | Cron | Every 6h smoke, nightly regression |
 
 ---
@@ -600,8 +600,8 @@ flowchart TB
     end
     
     subgraph Volumes[Volumes]
-        output["./output"]
-        results["./allure-results"]
+        output["./output\n(results + artifacts)"]
+        report["./allure-report\n(generated HTML)"]
     end
     
     Image --> Compose
@@ -622,11 +622,10 @@ docker-compose up -d allure-report && open http://localhost:5050  # View reports
 
 | Service | Description |
 |---------|-------------|
-| `e2e-tests` | Parallel execution (4 workers) |
-| `e2e-tests-single` | Sequential execution |
-| `e2e-tests-chrome` | Chrome headless only |
-| `e2e-tests-firefox` | Firefox headless only |
-| `allure-report` | Report server on :5050 |
+| `e2e-tests` | Sequential execution (runs tests and generates report) |
+| `e2e-tests-parallel` | Parallel execution (4 workers) - commented out |
+| `e2e-tests-firefox` | Firefox headless only - commented out |
+| `allure-report` | Report server on :5050 (nginx) |
 
 </details>
 
