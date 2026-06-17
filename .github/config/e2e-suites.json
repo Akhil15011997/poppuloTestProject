@@ -1,0 +1,88 @@
+{
+  "suites": [
+    {
+      "suite_name": "smoke",
+      "suite_tag": "@smoke",
+      "description": "Smoke tests for quick validation"
+    },
+    {
+      "suite_name": "auth",
+      "suite_tag": "@auth",
+      "description": "Authentication related tests (login, registration)"
+    },
+    {
+      "suite_name": "products",
+      "suite_tag": "@products",
+      "description": "Product browsing and search tests"
+    },
+    {
+      "suite_name": "cart",
+      "suite_tag": "@cart",
+      "description": "Shopping cart tests"
+    },
+    {
+      "suite_name": "checkout",
+      "suite_tag": "@checkout",
+      "description": "Checkout flow tests"
+    },
+    {
+      "suite_name": "api",
+      "suite_tag": "@apiOnly",
+      "description": "API-only tests"
+    },
+    {
+      "suite_name": "api-ui",
+      "suite_tag": "@api-ui",
+      "description": "Combined API and UI tests"
+    },
+    {
+      "suite_name": "e2e",
+      "suite_tag": "@e2e",
+      "description": "Full end-to-end flow tests"
+    },
+    {
+      "suite_name": "negative",
+      "suite_tag": "@negative",
+      "description": "Negative test scenarios"
+    },
+    {
+      "suite_name": "regression",
+      "suite_tag": "@smoke|@auth|@products|@cart|@checkout",
+      "description": "Full regression suite"
+    },
+    {
+      "suite_name": "accessibility",
+      "suite_tag": "@accessibility",
+      "description": "Accessibility compliance tests (WCAG 2.2 AA, EAA, ADA)"
+    },
+    {
+      "suite_name": "wcag",
+      "suite_tag": "@wcag22aa",
+      "description": "WCAG 2.2 AA compliance tests"
+    },
+    {
+      "suite_name": "eaa",
+      "suite_tag": "@eaa",
+      "description": "European Accessibility Act compliance tests"
+    },
+    {
+      "suite_name": "ada",
+      "suite_tag": "@ada",
+      "description": "Americans with Disabilities Act compliance tests"
+    }
+  ],
+  "browsers": [
+    {
+      "name": "chromium",
+      "config": "chromeHeadless"
+    },
+    {
+      "name": "firefox",
+      "config": "firefoxHeadless"
+    },
+    {
+      "name": "webkit",
+      "config": "webkit"
+    }
+  ]
+}

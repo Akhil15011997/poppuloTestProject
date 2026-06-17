@@ -1,0 +1,153 @@
+name: E2E Scheduled Tests
+
+on:
+  schedule:
+    # Run smoke tests every 6 hours
+    - cron: '0 */6 * * *'
+    # Run full regression at midnight UTC
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+    inputs:
+      test_type:
+        description: 'Type of test run'
+        required: true
+        default: 'smoke'
+        type: choice
+        options:
+          - smoke
+          - regression
+          - api
+          - full
+
+env:
+  NODE_VERSION: '20'
+  PNPM_VERSION: '9.1.0'
+jobs:
+  determine-tests:
+    name: Determine Tests to Run
+    runs-on: ubuntu-latest
+    outputs:
+      suites: ${{ steps.determine.outputs.suites }}
+      is_regression: ${{ steps.determine.outputs.is_regression }}
+    steps:
+      - name: Determine test suites
+        id: determine
+        run: |
+          # Check if this is a scheduled run or manual
+          if [ "${{ github.event_name }}" == "schedule" ]; then
+            # Check which schedule triggered this
+            HOUR=$(date -u +%H)
+            if [ "$HOUR" == "00" ]; then
+              # Midnight - run full regression
+              echo "suites=[\"auth\", \"products\", \"cart\", \"checkout\", \"api\"]" >> $GITHUB_OUTPUT
+              echo "is_regression=true" >> $GITHUB_OUTPUT
+            else
+              # Every 6 hours - run smoke only
+              echo "suites=[\"smoke\"]" >> $GITHUB_OUTPUT
+              echo "is_regression=false" >> $GITHUB_OUTPUT
+            fi
+          else
+            # Manual trigger
+            case "${{ inputs.test_type }}" in
+              smoke)
+                echo "suites=[\"smoke\"]" >> $GITHUB_OUTPUT
+                echo "is_regression=false" >> $GITHUB_OUTPUT
+                ;;
+              regression)
+                echo "suites=[\"auth\", \"products\", \"cart\", \"checkout\"]" >> $GITHUB_OUTPUT
+                echo "is_regression=true" >> $GITHUB_OUTPUT
+                ;;
+              api)
+                echo "suites=[\"api\"]" >> $GITHUB_OUTPUT
+                echo "is_regression=false" >> $GITHUB_OUTPUT
+                ;;
+              full)
+                echo "suites=[\"auth\", \"products\", \"cart\", \"checkout\", \"api\", \"api-ui\"]" >> $GITHUB_OUTPUT
+                echo "is_regression=true" >> $GITHUB_OUTPUT
+                ;;
+            esac
+          fi
+
+  run-scheduled-tests:
+    name: Run - ${{ matrix.suite }}
+    needs: determine-tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        suite: ${{ fromJson(needs.determine-tests.outputs.suites) }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+          cache-dependency-path: e2e/pnpm-lock.yaml
+
+      - name: Install dependencies
+        working-directory: e2e
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright browsers
+        working-directory: e2e
+        run: npx playwright install --with-deps chromium
+
+      - name: Run E2E tests - ${{ matrix.suite }}
+        working-directory: e2e
+
+        run: |
+          echo "Running scheduled tests for suite: ${{ matrix.suite }}"
+          pnpm e2e:parallel staging:@${{ matrix.suite }}:chromeHeadless 4 || true
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: scheduled-results-${{ matrix.suite }}
+          path: e2e/output/
+          retention-days: 14
+
+  notify-results:
+    name: Notify Results
+    needs: [determine-tests, run-scheduled-tests]
+    runs-on: ubuntu-latest
+    if: always()
+
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: all-results
+
+      - name: Generate summary
+        run: |
+          echo "## Scheduled E2E Test Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Run Type:** ${{ needs.determine-tests.outputs.is_regression == 'true' && 'Regression' || 'Smoke' }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Trigger:** ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Time:** $(date -u)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Suites Executed" >> $GITHUB_STEP_SUMMARY
+          echo "${{ needs.determine-tests.outputs.suites }}" >> $GITHUB_STEP_SUMMARY
+
+      # Add notification step here (Slack, Teams, Email, etc.)
+      # - name: Send Slack notification
+      #   if: failure()
+      #   uses: slackapi/slack-github-action@v1
+      #   with:
+      #     payload: |
+      #       {
+      #         "text": "E2E Tests Failed",
+      #         "blocks": [...]
+      #       }

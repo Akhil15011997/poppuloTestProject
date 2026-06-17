@@ -1,0 +1,223 @@
+name: 'Run E2E Tests'
+description: 'Composite action to run E2E tests with Playwright (supports Docker or direct execution)'
+
+inputs:
+  environment:
+    description: 'Environment to run tests against'
+    required: true
+    default: 'local'
+  suite:
+    description: 'Test suite tag to run'
+    required: true
+    default: '@smoke'
+  browser:
+    description: 'Browser to use for testing'
+    required: false
+    default: 'chromeHeadless'
+  workers:
+    description: 'Number of parallel workers'
+    required: false
+    default: '4'
+  use-docker:
+    description: 'Run tests in Docker container'
+    required: false
+    default: 'true'
+  docker-image:
+    description: 'Docker image to use (required if use-docker is true)'
+    required: false
+    default: ''
+  node-version:
+    description: 'Node.js version (only used if use-docker is false)'
+    required: false
+    default: '20'
+  upload-artifacts:
+    description: 'Whether to upload test artifacts'
+    required: false
+    default: 'true'
+  artifact-retention-days:
+    description: 'Number of days to retain artifacts'
+    required: false
+    default: '30'
+
+outputs:
+  test-result:
+    description: 'Test execution result'
+    value: ${{ steps.run-tests.outcome }}
+  artifact-name:
+    description: 'Name of uploaded artifact'
+    value: ${{ steps.upload.outputs.artifact-name }}
+  total:
+    description: 'Total number of tests'
+    value: ${{ steps.test-summary.outputs.total }}
+  passed:
+    description: 'Number of passed tests'
+    value: ${{ steps.test-summary.outputs.passed }}
+  failed:
+    description: 'Number of failed tests'
+    value: ${{ steps.test-summary.outputs.failed }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Create output directories
+      shell: bash
+      run: |
+        mkdir -p e2e/output/allure-results
+
+    # ============================================
+    # Docker Execution Mode
+    # ============================================
+    - name: Pull Docker image
+      if: inputs.use-docker == 'true'
+      shell: bash
+      run: |
+        echo "Pulling Docker image: ${{ inputs.docker-image }}"
+        docker pull ${{ inputs.docker-image }}
+
+    - name: Run E2E tests in Docker
+      id: run-tests-docker
+      if: inputs.use-docker == 'true'
+      shell: bash
+      run: |
+        echo "=========================================="
+        echo "Running E2E Tests in Docker"
+        echo "=========================================="
+        echo "Image: ${{ inputs.docker-image }}"
+        echo "Environment: ${{ inputs.environment }}"
+        echo "Suite: ${{ inputs.suite }}"
+        echo "Browser: ${{ inputs.browser }}"
+        echo "=========================================="
+        
+        PROFILE="${{ inputs.environment }}:${{ inputs.suite }}:${{ inputs.browser }}"
+        
+        docker run --rm \
+          -e CI=true \
+          -v $(pwd)/e2e/output:/app/output \
+          ${{ inputs.docker-image }} \
+          pnpm e2e "$PROFILE" || exit_code=$?
+        
+        echo "Test execution completed with exit code: ${exit_code:-0}"
+        exit ${exit_code:-0}
+
+    # ============================================
+    # Direct Execution Mode (no Docker)
+    # ============================================
+    - name: Setup Node.js
+      if: inputs.use-docker == 'false'
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+
+    - name: Setup pnpm
+      if: inputs.use-docker == 'false'
+      uses: pnpm/action-setup@v3
+      with:
+        version: 9.1.0
+
+    - name: Get pnpm store directory
+      if: inputs.use-docker == 'false'
+      shell: bash
+      run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+    - name: Setup pnpm cache
+      if: inputs.use-docker == 'false'
+      uses: actions/cache@v4
+      with:
+        path: ${{ env.STORE_PATH }}
+        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('e2e/pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-pnpm-store-
+
+    - name: Install dependencies
+      if: inputs.use-docker == 'false'
+      shell: bash
+      working-directory: e2e
+      run: pnpm install --frozen-lockfile
+
+    - name: Install Playwright browsers
+      if: inputs.use-docker == 'false'
+      shell: bash
+      working-directory: e2e
+      run: npx playwright install --with-deps
+
+    - name: Run E2E tests directly
+      id: run-tests-direct
+      if: inputs.use-docker == 'false'
+      shell: bash
+      working-directory: e2e
+      env:
+        PROFILE: '${{ inputs.environment }}:${{ inputs.suite }}:${{ inputs.browser }}:playwright'
+      run: |
+        echo "=========================================="
+        echo "Running E2E Tests (Direct)"
+        echo "=========================================="
+        echo "Environment: ${{ inputs.environment }}"
+        echo "Suite: ${{ inputs.suite }}"
+        echo "Browser: ${{ inputs.browser }}"
+        echo "Workers: ${{ inputs.workers }}"
+        echo "Profile: $PROFILE"
+        echo "=========================================="
+        
+        pnpm run e2e:parallel "$PROFILE" ${{ inputs.workers }} || exit_code=$?
+        
+        echo "Test execution completed with exit code: ${exit_code:-0}"
+        exit ${exit_code:-0}
+
+    # ============================================
+    # Common Steps (both modes)
+    # ============================================
+    - name: Set test result
+      id: run-tests
+      if: always()
+      shell: bash
+      run: |
+        if [ "${{ inputs.use-docker }}" == "true" ]; then
+          echo "outcome=${{ steps.run-tests-docker.outcome }}" >> $GITHUB_OUTPUT
+        else
+          echo "outcome=${{ steps.run-tests-direct.outcome }}" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Generate test summary
+      id: test-summary
+      if: always()
+      shell: bash
+      run: |
+        SUMMARY_FILE="e2e/allure-report/widgets/summary.json"
+        TOTAL=0
+        PASSED=0
+        FAILED=0
+        
+        if [ -f "$SUMMARY_FILE" ]; then
+          TOTAL=$(jq -r '.statistic.total // 0' "$SUMMARY_FILE" 2>/dev/null || echo "0")
+          PASSED=$(jq -r '.statistic.passed // 0' "$SUMMARY_FILE" 2>/dev/null || echo "0")
+          FAILED=$(jq -r '.statistic.failed // 0' "$SUMMARY_FILE" 2>/dev/null || echo "0")
+        fi
+        
+        echo "total=$TOTAL" >> $GITHUB_OUTPUT
+        echo "passed=$PASSED" >> $GITHUB_OUTPUT
+        echo "failed=$FAILED" >> $GITHUB_OUTPUT
+
+    - name: Upload test artifacts
+      id: upload
+      if: always() && inputs.upload-artifacts == 'true'
+      uses: actions/upload-artifact@v4
+      with:
+        name: e2e-results-${{ inputs.suite }}-${{ inputs.browser }}-${{ github.run_id }}
+        path: e2e/output/
+        retention-days: ${{ inputs.artifact-retention-days }}
+
+    - name: Generate step summary
+      if: always()
+      shell: bash
+      run: |
+        echo "## 📊 E2E Test Execution" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "| Parameter | Value |" >> $GITHUB_STEP_SUMMARY
+        echo "|-----------|-------|" >> $GITHUB_STEP_SUMMARY
+        echo "| Mode | ${{ inputs.use-docker == 'true' && 'Docker 🐳' || 'Direct' }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| Environment | ${{ inputs.environment }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| Suite | ${{ inputs.suite }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| Browser | ${{ inputs.browser }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| Result | ${{ steps.run-tests.outputs.outcome == 'success' && '✅ Passed' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Test Results:** ${{ steps.test-summary.outputs.passed }}/${{ steps.test-summary.outputs.total }} passed" >> $GITHUB_STEP_SUMMARY
