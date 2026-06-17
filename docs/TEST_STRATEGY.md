@@ -586,19 +586,14 @@ Use dedicated tools (k6, JMeter, Gatling) for:
 
 ## 11. Future Improvements
 
-### 11.1 Short-term (1-3 months)
 - [ ] Visual regression testing integration
 - [ ] Enhanced Allure reporting with trends
 - [ ] Test coverage mapping to requirements
 - [ ] Slack/Teams notifications for failures
-
-### 11.2 Medium-term (3-6 months)
 - [ ] Contract testing for API versioning
 - [ ] AI-assisted test generation expansion
 - [ ] Performance trending dashboard
 - [ ] Self-healing locators
-
-### 11.3 Long-term (6-12 months)
 - [ ] Chaos engineering integration
 - [ ] Production monitoring correlation
 - [ ] ML-based flaky test prediction
@@ -664,4 +659,4 @@ docker-compose up --build
 
 *Document Version: 1.1*  
 *Last Updated: June 2026*  
-*Owner: QE Platform Team*
+*Owner: Akhil Srinivas :p*

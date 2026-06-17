@@ -347,12 +347,14 @@ e2e/ACCESSIBILITY_REPORT.md
 ```
 
 **Features:**
+
 - 🔴 Critical, 🟠 Serious, 🟡 Moderate, 🟢 Minor violation indicators
 - WCAG references with remediation links
 - Affected elements with CSS selectors
 - Summary tables per page/scan
 
 After test run:
+
 ```
 ♿ ACCESSIBILITY REPORT:
    📄 /path/to/e2e/ACCESSIBILITY_REPORT.md
@@ -384,6 +386,8 @@ helper.assertNoCriticalViolations(results);
 
 ## 📧 Email Testing with Mailgun
 
+*This is not related to the project. Added just to showcase the email testing functionality*
+
 > 📖 **Full Documentation**: [docs/EMAIL_TESTING.md](docs/EMAIL_TESTING.md)
 
 Test email functionality using Mailgun (with mock mode for demos):
@@ -399,6 +403,7 @@ MAILGUN_MOCK_MODE=false pnpm e2e local:@email:apiOnly
 ### Configuration
 
 Add to your `.env` file:
+
 ```bash
 MAILGUN_API_KEY=key-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 MAILGUN_DOMAIN=sandbox1234567890abcdef.mailgun.org
@@ -438,6 +443,7 @@ pnpm e2e local:@apiOnly:apiOnly
 ### How It Works
 
 When using `apiOnly` or `api` as the browser profile, the framework:
+
 - **Does NOT launch any browser** (Playwright helper is excluded)
 - Only loads the `REST` and `ChaiWrapper` helpers
 - Configured in `e2e/config/getHelpers.js` via `isApiOnlyMode()` function
@@ -666,6 +672,7 @@ flowchart LR
 ### View Report Commands
 
 After test execution, you'll see:
+
 ```
 ============================================================
 📊 VIEW TEST REPORT:
@@ -727,6 +734,7 @@ flowchart LR
 <summary>📖 Code Examples</summary>
 
 **1. Page Object** (`pages/myPage/myPage.page.js`)
+
 ```javascript
 const { I } = inject();
 module.exports = () => ({
@@ -736,17 +744,20 @@ module.exports = () => ({
 ```
 
 **2. Register** (`config/pageIncludes.js`)
+
 ```javascript
 exports.include = { myPage: './pages/myPage/myPage.page.js' };
 ```
 
 **3. Steps** (`tests/steps/myPage.steps.js`)
+
 ```javascript
 const { I, myPage } = inject();
 When('the user does something', async () => { await myPage.doSomething(); });
 ```
 
 **4. Feature** (`tests/features/myFeature.feature`)
+
 ```gherkin
 @myFeature
 Feature: My Feature
@@ -807,6 +818,7 @@ AI_PROVIDER=ollama  # or groq, perplexity
 ```
 
 **Features:**
+
 - AI-powered test result analysis
 - **Network traffic analysis** with AI insights
 - Automatic test scenario generation
@@ -821,6 +833,7 @@ pnpm e2e local:@network-analysis:chrome
 ```
 
 Captures and analyzes all network requests/responses during test execution:
+
 - Request/response counts and status codes
 - API endpoint monitoring
 - Error detection (4xx/5xx responses)
