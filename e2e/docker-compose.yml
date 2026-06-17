@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  # Main E2E test service (Chrome only, single execution)
+  e2e-tests:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - PROFILE=${PROFILE:-local:@smoke:chromeHeadless}
+      - CI=true
+    volumes:
+      - ./output:/app/output
+      - ./allure-results:/app/allure-results
+    # Use host network to fix DNS/connectivity issues
+    network_mode: host
+    command: sh -c "pnpm e2e $$PROFILE"
+
+  # # Parallel execution with workers (commented out - use for CI)
+  # e2e-tests-parallel:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   environment:
+  #     - PROFILE=${PROFILE:-local:@smoke:chromeHeadless}
+  #     - WORKERS=${WORKERS:-4}
+  #     - CI=true
+  #   volumes:
+  #     - ./output:/app/output
+  #     - ./allure-results:/app/allure-results
+  #   network_mode: host
+  #   command: sh -c "pnpm e2e:parallel $$PROFILE $$WORKERS"
+
+  # # Firefox headless (commented out - only Chromium installed)
+  # e2e-tests-firefox:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   environment:
+  #     - PROFILE=local:@smoke:firefoxHeadless
+  #     - CI=true
+  #   volumes:
+  #     - ./output:/app/output
+  #   command: sh -c "pnpm e2e $$PROFILE"
+
+  # Allure report server
+  allure-report:
+    image: frankescobar/allure-docker-service
+    ports:
+      - "5050:5050"
+    volumes:
+      - ./allure-results:/app/allure-results
+      - ./allure-report:/app/default-reports
+    environment:
+      CHECK_RESULTS_EVERY_SECONDS: 5
+      KEEP_HISTORY: 1

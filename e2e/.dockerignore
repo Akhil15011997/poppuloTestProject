@@ -1,0 +1,32 @@
+# Dependencies (will be installed fresh)
+node_modules/
+
+# Test output
+output/
+allure-results/
+allure-report/
+
+# IDE
+.idea/
+.vscode/
+
+# OS files
+.DS_Store
+
+# Git
+.git/
+.gitignore
+
+# Logs
+*.log
+
+# Local env files
+.env
+.env.local
+
+# Documentation (not needed in container)
+*.md
+!README.md
+
+# Accessibility report (generated during tests)
+ACCESSIBILITY_REPORT.md

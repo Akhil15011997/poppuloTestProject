@@ -1,0 +1,36 @@
+module.exports = {
+  env: {
+    browser: true,
+    commonjs: true,
+    es2021: true,
+    node: true,
+  },
+  extends: ['eslint:recommended', 'prettier'],
+  parserOptions: {
+    ecmaVersion: 'latest',
+  },
+  plugins: ['codeceptjs'],
+  globals: {
+    actor: 'readonly',
+    Feature: 'readonly',
+    Scenario: 'readonly',
+    Given: 'readonly',
+    When: 'readonly',
+    Then: 'readonly',
+    Before: 'readonly',
+    After: 'readonly',
+    BeforeSuite: 'readonly',
+    AfterSuite: 'readonly',
+    inject: 'readonly',
+    locate: 'readonly',
+    pause: 'readonly',
+    within: 'readonly',
+    session: 'readonly',
+    DataTable: 'readonly',
+    Data: 'readonly',
+  },
+  rules: {
+    'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+    'no-console': 'off',
+  },
+};
