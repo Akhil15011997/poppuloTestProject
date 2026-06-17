@@ -20,7 +20,7 @@ on:
           - full
 
 env:
-  NODE_VERSION: '20'
+  NODE_VERSION: '22'
   PNPM_VERSION: '9.1.0'
 jobs:
   determine-tests:

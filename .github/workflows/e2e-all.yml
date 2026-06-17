@@ -44,7 +44,7 @@ on:
       - '.github/workflows/e2e-*.yml'
 
 env:
-  NODE_VERSION: '20'
+  NODE_VERSION: '22'
   PNPM_VERSION: '9.1.0'
   DOCKER_IMAGE: ghcr.io/akhil15011997/assessmentproject/e2e-tests:latest
 

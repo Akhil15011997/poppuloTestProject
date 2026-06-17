@@ -1,5 +1,5 @@
 # Use slim Node image instead of full Playwright image
-FROM node:20-slim
+FROM node:22-slim
 
 WORKDIR /app
 

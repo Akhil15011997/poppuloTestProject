@@ -29,7 +29,7 @@ inputs:
   node-version:
     description: 'Node.js version (only used if use-docker is false)'
     required: false
-    default: '20'
+    default: '22'
   upload-artifacts:
     description: 'Whether to upload test artifacts'
     required: false
