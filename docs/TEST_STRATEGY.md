@@ -173,8 +173,9 @@ Our testing approach follows the **Testing Pyramid** principle with emphasis on:
 
 | Workflow | Trigger | Tests Run | Duration |
 |----------|---------|-----------|----------|
-| `e2e-suite.yml` | PR, Push | Smoke suite | ~5 min |
-| `e2e-all.yml` | Manual, Merge to main | Full regression | ~30 min |
+| `pr-checks.yml` | PR, Push | Lint + Syntax + API smoke (no browser) | ~3 min |
+| `e2e-suite.yml` | Manual | Single suite by tag | ~5 min |
+| `e2e-all.yml` | Push to main, Manual | Full E2E parallel suites | ~5-10 min |
 | `e2e-scheduled.yml` | Cron (nightly) | All + Performance | ~45 min |
 
 ### 4.3 Test Execution Profiles

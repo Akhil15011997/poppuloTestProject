@@ -10,46 +10,46 @@ This document provides visual representations of the test automation framework a
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                        TEST AUTOMATION FRAMEWORK                             │
+│                        TEST AUTOMATION FRAMEWORK                             │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                              │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                         TEST EXECUTION LAYER                         │   │
-│  │  ┌───────────┐  ┌───────────┐  ┌───────────┐  ┌───────────┐        │   │
-│  │  │  Gherkin  │  │   Step    │  │   Test    │  │  Hooks &  │        │   │
-│  │  │ Features  │──│Definitions│──│   State   │──│  Plugins  │        │   │
-│  │  │ (.feature)│  │ (.steps)  │  │  Manager  │  │           │        │   │
-│  │  └───────────┘  └───────────┘  └───────────┘  └───────────┘        │   │
-│  └─────────────────────────────────────────────────────────────────────┘   │
-│                                      │                                       │
-│                                      ▼                                       │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                         ABSTRACTION LAYER                            │   │
-│  │  ┌───────────┐  ┌───────────┐  ┌───────────┐  ┌───────────┐        │   │
-│  │  │   Page    │  │ Component │  │    API    │  │  Helper   │        │   │
-│  │  │  Objects  │  │  Objects  │  │ Services  │  │  Classes  │        │   │
-│  │  │ (pages/)  │  │(components│  │(services/)│  │(helpers/) │        │   │
-│  │  └───────────┘  └───────────┘  └───────────┘  └───────────┘        │   │
-│  └─────────────────────────────────────────────────────────────────────┘   │
-│                                      │                                       │
-│                                      ▼                                       │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                         FRAMEWORK LAYER                              │   │
-│  │  ┌───────────┐  ┌───────────┐  ┌───────────┐  ┌───────────┐        │   │
-│  │  │ CodeceptJS│  │ Playwright│  │   Axios   │  │   Chai    │        │   │
-│  │  │  (BDD)    │  │ (Browser) │  │  (HTTP)   │  │(Assertions│        │   │
-│  │  └───────────┘  └───────────┘  └───────────┘  └───────────┘        │   │
-│  └─────────────────────────────────────────────────────────────────────┘   │
-│                                      │                                       │
-│                                      ▼                                       │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                         TARGET SYSTEMS                               │   │
-│  │  ┌─────────────────────────┐  ┌─────────────────────────┐          │   │
-│  │  │      Web Application    │  │       REST APIs         │          │   │
-│  │  │  (automationexercise)   │  │    (/api/endpoints)     │          │   │
-│  │  └─────────────────────────┘  └─────────────────────────┘          │   │
-│  └─────────────────────────────────────────────────────────────────────┘   │
-│                                                                              │
+│                                                                              │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                         TEST EXECUTION LAYER                         │   │
+│  │  ┌───────────┐  ┌───────────┐  ┌───────────┐  ┌───────────┐        │   │
+│  │  │  Gherkin  │  │   Step    │  │   Test    │  │  Hooks &  │        │   │
+│  │  │ Features  │──│Definitions│──│   State   │──│  Plugins  │        │   │
+│  │  │ (.feature)│  │ (.steps)  │  │  Manager  │  │           │        │   │
+│  │  └───────────┘  └───────────┘  └───────────┘  └───────────┘        │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                      │                                       │
+│                                      ▼                                       │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                         ABSTRACTION LAYER                            │   │
+│  │  ┌───────────┐  ┌───────────┐  ┌───────────┐  ┌───────────┐        │   │
+│  │  │   Page    │  │ Component │  │    API    │  │  Helper   │        │   │
+│  │  │  Objects  │  │  Objects  │  │ Services  │  │  Classes  │        │   │
+│  │  │ (pages/)  │  │(components│  │(services/)│  │(helpers/) │        │   │
+│  │  └───────────┘  └───────────┘  └───────────┘  └───────────┘        │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                      │                                       │
+│                                      ▼                                       │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                         FRAMEWORK LAYER                              │   │
+│  │  ┌───────────┐  ┌───────────┐  ┌───────────┐  ┌───────────┐        │   │
+│  │  │ CodeceptJS│  │ Playwright│  │   Axios   │  │   Chai    │        │   │
+│  │  │  (BDD)    │  │ (Browser) │  │  (HTTP)   │  │(Assertions│        │   │
+│  │  └───────────┘  └───────────┘  └───────────┘  └───────────┘        │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                      │                                       │
+│                                      ▼                                       │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                         TARGET SYSTEMS                               │   │
+│  │  ┌─────────────────────────┐  ┌─────────────────────────┐          │   │
+│  │  │      Web Application    │  │       REST APIs         │          │   │
+│  │  │  (automationexercise)   │  │    (/api/endpoints)     │          │   │
+│  │  └─────────────────────────┘  └─────────────────────────┘          │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -60,85 +60,85 @@ This document provides visual representations of the test automation framework a
 ```
 e2e/
 ├── tests/
-│   ├── features/           # Gherkin feature files
-│   │   ├── api/           # API test scenarios
-│   │   ├── auth/          # Authentication tests
-│   │   ├── cart/          # Shopping cart tests
-│   │   ├── checkout/      # Checkout flow tests
-│   │   ├── products/      # Product browsing tests
-│   │   ├── accessibility/ # A11y tests
-│   │   ├── mobile/        # Mobile-specific tests
-│   │   └── mcp/           # MCP integration tests
-│   │
-│   └── steps/             # Step definitions
-│       ├── common.steps.js
-│       ├── api.steps.js
-│       ├── auth.steps.js
-│       ├── cart.steps.js
-│       ├── product.steps.js
-│       └── accessibility.steps.js
+│   ├── features/           # Gherkin feature files
+│   │   ├── api/           # API test scenarios
+│   │   ├── auth/          # Authentication tests
+│   │   ├── cart/          # Shopping cart tests
+│   │   ├── checkout/      # Checkout flow tests
+│   │   ├── products/      # Product browsing tests
+│   │   ├── accessibility/ # A11y tests
+│   │   ├── mobile/        # Mobile-specific tests
+│   │   └── mcp/           # MCP integration tests
+│   │
+│   └── steps/             # Step definitions
+│       ├── common.steps.js
+│       ├── api.steps.js
+│       ├── auth.steps.js
+│       ├── cart.steps.js
+│       ├── product.steps.js
+│       └── accessibility.steps.js
 │
-├── pages/                  # Page Object Models
-│   ├── auth/
-│   │   ├── login.page.js
-│   │   └── register.page.js
-│   ├── products/
-│   │   ├── products.page.js
-│   │   └── productDetail.page.js
-│   ├── cart/
-│   │   └── cart.page.js
-│   ├── checkout/
-│   │   ├── checkout.page.js
-│   │   └── payment.page.js
-│   └── home/
-│       └── home.page.js
+├── pages/                  # Page Object Models
+│   ├── auth/
+│   │   ├── login.page.js
+│   │   └── register.page.js
+│   ├── products/
+│   │   ├── products.page.js
+│   │   └── productDetail.page.js
+│   ├── cart/
+│   │   └── cart.page.js
+│   ├── checkout/
+│   │   ├── checkout.page.js
+│   │   └── payment.page.js
+│   └── home/
+│       └── home.page.js
 │
-├── components/             # Reusable UI components
-│   ├── navbar.component.js
-│   ├── footer.component.js
-│   ├── modal.component.js
-│   └── sidebar.component.js
+├── components/             # Reusable UI components
+│   ├── navbar.component.js
+│   ├── footer.component.js
+│   ├── modal.component.js
+│   └── sidebar.component.js
 │
-├── services/               # API service abstractions
-│   ├── user.api.js
-│   ├── product.api.js
-│   ├── brand.api.js
-│   ├── search.api.js
-│   ├── cart.api.js
-│   └── email.api.js        # Mailgun email service
+├── services/               # API service abstractions
+│   ├── user.api.js
+│   ├── product.api.js
+│   ├── brand.api.js
+│   ├── search.api.js
+│   ├── cart.api.js
+│   └── email.api.js        # Mailgun email service
 │
-├── helpers/                # Custom helper classes
-│   ├── playwrightHelper.js     # Ad blocking, force click, network capture
-│   ├── accessibilityHelper.js  # WCAG/EAA/ADA compliance testing
-│   ├── actorCapabilities.js    # Click helpers, ad dismissal
-│   └── perplexityHelper.js     # AI-powered test analysis
+├── helpers/                # Custom helper classes
+│   ├── playwrightHelper.js     # Ad blocking, force click, network capture
+│   ├── accessibilityHelper.js  # WCAG/EAA/ADA compliance testing
+│   ├── actorCapabilities.js    # Click helpers, ad dismissal
+│   └── perplexityHelper.js     # AI-powered test analysis
 │
-├── data/                   # Test data management
-│   ├── testData.js
-│   ├── testData.local.js
-│   ├── testData.staging.js
-│   ├── testData.prod.js
-│   ├── testState.js
-│   └── userGenerator.js
+├── data/                   # Test data management
+│   ├── testData.js
+│   ├── testData.local.js
+│   ├── testData.staging.js
+│   ├── testData.prod.js
+│   ├── testState.js
+│   └── userGenerator.js
 │
-├── config/                 # Configuration files
-│   ├── aggregate.js
-│   ├── getHelpers.js
-│   ├── getPlugins.js
-│   ├── pageIncludes.js
-│   ├── bootstrap.js      # Pre-test: cleans old reports
-│   └── teardown.js       # Post-test: generates reports
+├── config/                 # Configuration files
+│   ├── aggregate.js
+│   ├── getHelpers.js
+│   ├── getPlugins.js
+│   ├── pageIncludes.js
+│   ├── bootstrap.js      # Pre-test: cleans old reports
+│   └── teardown.js       # Post-test: generates reports
 │
-├── output/                 # Test outputs (gitignored)
-│   ├── allure-results/
-│   ├── screenshots/
-│   └── traces/
+├── output/                 # Test outputs (gitignored)
+│   ├── allure-results/
+│   ├── screenshots/
+│   └── traces/
 │
 ├── ACCESSIBILITY_REPORT.md # Auto-generated accessibility report (@accessibility tests)
-├── codecept.conf.js        # Main configuration
-├── Dockerfile              # Container definition
-├── docker-compose.yml      # Container orchestration
-└── package.json            # Dependencies
+├── codecept.conf.js        # Main configuration
+├── Dockerfile              # Container definition
+├── docker-compose.yml      # Container orchestration
+└── package.json            # Dependencies
 ```
 
 ---
@@ -147,76 +147,76 @@ e2e/
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                           TEST EXECUTION FLOW                                │
+│                           TEST EXECUTION FLOW                                │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                              │
-│  ┌─────────┐                                                                │
-│  │  START  │                                                                │
-│  └────┬────┘                                                                │
-│       │                                                                      │
-│       ▼                                                                      │
-│  ┌─────────────────────┐                                                    │
-│  │  Parse PROFILE      │  PROFILE=local:@smoke:chromeHeadless:playwright   │
-│  │  Environment        │                                                    │
-│  └──────────┬──────────┘                                                    │
-│             │                                                                │
-│             ▼                                                                │
-│  ┌─────────────────────┐     ┌─────────────────────┐                       │
-│  │  Load Configuration │────▶│  aggregate.js       │                       │
-│  │  (codecept.conf.js) │     │  - getHelpers()     │                       │
-│  └──────────┬──────────┘     │  - getPlugins()     │                       │
-│             │                 │  - pageIncludes     │                       │
-│             │                 └─────────────────────┘                       │
-│             ▼                                                                │
-│  ┌─────────────────────┐                                                    │
-│  │  Bootstrap Hook     │  Initialize test environment                       │
-│  └──────────┬──────────┘                                                    │
-│             │                                                                │
-│             ▼                                                                │
-│  ┌─────────────────────┐     ┌─────────────────────┐                       │
-│  │  Filter Features    │────▶│  Match @tags        │                       │
-│  │  by Tags            │     │  (e.g., @smoke)     │                       │
-│  └──────────┬──────────┘     └─────────────────────┘                       │
-│             │                                                                │
-│             ▼                                                                │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                     FOR EACH SCENARIO                                │   │
-│  │  ┌─────────────────┐                                                 │   │
-│  │  │  Before Hook    │  Reset state, setup data                        │   │
-│  │  └────────┬────────┘                                                 │   │
-│  │           │                                                           │   │
-│  │           ▼                                                           │   │
-│  │  ┌─────────────────┐     ┌─────────────────┐                         │   │
-│  │  │  Execute Steps  │────▶│  Step Definition│                         │   │
-│  │  │  (Given/When/   │     │  ────────────── │                         │   │
-│  │  │   Then)         │     │  Page Objects   │                         │   │
-│  │  └────────┬────────┘     │  API Services   │                         │   │
-│  │           │               │  Helpers        │                         │   │
-│  │           │               └─────────────────┘                         │   │
-│  │           ▼                                                           │   │
-│  │  ┌─────────────────┐                                                 │   │
-│  │  │  After Hook     │  Cleanup, screenshots on fail                   │   │
-│  │  └────────┬────────┘                                                 │   │
-│  │           │                                                           │   │
-│  └───────────┼──────────────────────────────────────────────────────────┘   │
-│              │                                                               │
-│              ▼                                                               │
-│  ┌─────────────────────┐                                                    │
-│  │  Teardown Hook      │  Close browsers, generate reports                  │
-│  └──────────┬──────────┘                                                    │
-│             │                                                                │
-│             ▼                                                                │
-│  ┌─────────────────────┐     ┌─────────────────────┐                       │
-│  │  Generate Reports   │────▶│  - Allure HTML      │                       │
-│  │                     │     │  - JUnit XML        │                       │
-│  │                     │     │  - Screenshots      │                       │
-│  └──────────┬──────────┘     └─────────────────────┘                       │
-│             │                                                                │
-│             ▼                                                                │
-│  ┌─────────┐                                                                │
-│  │   END   │                                                                │
-│  └─────────┘                                                                │
-│                                                                              │
+│                                                                              │
+│  ┌─────────┐                                                                │
+│  │  START  │                                                                │
+│  └────┬────┘                                                                │
+│       │                                                                      │
+│       ▼                                                                      │
+│  ┌─────────────────────┐                                                    │
+│  │  Parse PROFILE      │  PROFILE=local:@smoke:chromeHeadless:playwright   │
+│  │  Environment        │                                                    │
+│  └──────────┬──────────┘                                                    │
+│             │                                                                │
+│             ▼                                                                │
+│  ┌─────────────────────┐     ┌─────────────────────┐                       │
+│  │  Load Configuration │──── │  aggregate.js       │                       │
+│  │  (codecept.conf.js) │     │  - getHelpers()     │                       │
+│  └──────────┬──────────┘     │  - getPlugins()     │                       │
+│             │                 │  - pageIncludes     │                       │
+│             │                 └─────────────────────┘                       │
+│             ▼                                                                │
+│  ┌─────────────────────┐                                                    │
+│  │  Bootstrap Hook     │  Initialize test environment                       │
+│  └──────────┬──────────┘                                                    │
+│             │                                                                │
+│             ▼                                                                │
+│  ┌─────────────────────┐     ┌─────────────────────┐                       │
+│  │  Filter Features    │──── │  Match @tags        │                       │
+│  │  by Tags            │     │  (e.g., @smoke)     │                       │
+│  └──────────┬──────────┘     └─────────────────────┘                       │
+│             │                                                                │
+│             ▼                                                                │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                     FOR EACH SCENARIO                                │   │
+│  │  ┌─────────────────┐                                                 │   │
+│  │  │  Before Hook    │  Reset state, setup data                        │   │
+│  │  └────────┬────────┘                                                 │   │
+│  │           │                                                           │   │
+│  │           ▼                                                           │   │
+│  │  ┌─────────────────┐     ┌─────────────────┐                         │   │
+│  │  │  Execute Steps  │──── │  Step Definition│                         │   │
+│  │  │  (Given/When/   │     │  ────────────── │                         │   │
+│  │  │   Then)         │     │  Page Objects   │                         │   │
+│  │  └────────┬────────┘     │  API Services   │                         │   │
+│  │           │               │  Helpers        │                         │   │
+│  │           │               └─────────────────┘                         │   │
+│  │           ▼                                                           │   │
+│  │  ┌─────────────────┐                                                 │   │
+│  │  │  After Hook     │  Cleanup, screenshots on fail                   │   │
+│  │  └────────┬────────┘                                                 │   │
+│  │           │                                                           │   │
+│  └───────────┼──────────────────────────────────────────────────────────┘   │
+│              │                                                               │
+│              ▼                                                               │
+│  ┌─────────────────────┐                                                    │
+│  │  Teardown Hook      │  Close browsers, generate reports                  │
+│  └──────────┬──────────┘                                                    │
+│             │                                                                │
+│             ▼                                                                │
+│  ┌─────────────────────┐     ┌─────────────────────┐                       │
+│  │  Generate Reports   │──── │  - Allure HTML      │                       │
+│  │                     │     │  - JUnit XML        │                       │
+│  │                     │     │  - Screenshots      │                       │
+│  └──────────┬──────────┘     └─────────────────────┘                       │
+│             │                                                                │
+│             ▼                                                                │
+│  ┌─────────┐                                                                │
+│  │   END   │                                                                │
+│  └─────────┘                                                                │
+│                                                                              │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -226,61 +226,61 @@ e2e/
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                         PAGE OBJECT MODEL                                    │
+│                         PAGE OBJECT MODEL                                    │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                              │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                        Step Definition                               │   │
-│  │                                                                       │   │
-│  │  When('the user logs in with {string} and {string}', (email, pwd) => │   │
-│  │    loginPage.login(email, pwd);                                      │   │
-│  │  });                                                                  │   │
-│  └──────────────────────────────┬──────────────────────────────────────┘   │
-│                                 │                                            │
-│                                 │ calls                                      │
-│                                 ▼                                            │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                         Page Object                                  │   │
-│  │                                                                       │   │
-│  │  // login.page.js                                                    │   │
-│  │  module.exports = {                                                  │   │
-│  │    // Locators (private)                                             │   │
-│  │    locators: {                                                       │   │
-│  │      emailInput: '[data-qa="login-email"]',                         │   │
-│  │      passwordInput: '[data-qa="login-password"]',                   │   │
-│  │      loginButton: '[data-qa="login-button"]',                       │   │
-│  │    },                                                                │   │
-│  │                                                                       │   │
-│  │    // Actions (public)                                               │   │
-│  │    async login(email, password) {                                    │   │
-│  │      await I.fillField(this.locators.emailInput, email);            │   │
-│  │      await I.fillField(this.locators.passwordInput, password);      │   │
-│  │      await I.click(this.locators.loginButton);                      │   │
-│  │    },                                                                │   │
-│  │                                                                       │   │
-│  │    // Verifications (public)                                         │   │
-│  │    async verifyLoginError() {                                        │   │
-│  │      await I.see('Your email or password is incorrect!');           │   │
-│  │    }                                                                 │   │
-│  │  };                                                                  │   │
-│  └──────────────────────────────┬──────────────────────────────────────┘   │
-│                                 │                                            │
-│                                 │ uses                                       │
-│                                 ▼                                            │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                      CodeceptJS Actor (I)                            │   │
-│  │                                                                       │   │
-│  │  I.fillField()  I.click()  I.see()  I.waitForElement()              │   │
-│  └──────────────────────────────┬──────────────────────────────────────┘   │
-│                                 │                                            │
-│                                 │ delegates to                               │
-│                                 ▼                                            │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                      Playwright Helper                               │   │
-│  │                                                                       │   │
-│  │  page.fill()  page.click()  page.locator()  page.waitFor()          │   │
-│  └─────────────────────────────────────────────────────────────────────┘   │
-│                                                                              │
+│                                                                              │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                        Step Definition                               │   │
+│  │                                                                       │   │
+│  │  When('the user logs in with {string} and {string}', (email, pwd) => │   │
+│  │    loginPage.login(email, pwd);                                      │   │
+│  │  });                                                                  │   │
+│  └──────────────────────────────┬──────────────────────────────────────┘   │
+│                                 │                                            │
+│                                 │ calls                                      │
+│                                 ▼                                            │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                         Page Object                                  │   │
+│  │                                                                       │   │
+│  │  // login.page.js                                                    │   │
+│  │  module.exports = {                                                  │   │
+│  │    // Locators (private)                                             │   │
+│  │    locators: {                                                       │   │
+│  │      emailInput: '[data-qa="login-email"]',                         │   │
+│  │      passwordInput: '[data-qa="login-password"]',                   │   │
+│  │      loginButton: '[data-qa="login-button"]',                       │   │
+│  │    },                                                                │   │
+│  │                                                                       │   │
+│  │    // Actions (public)                                               │   │
+│  │    async login(email, password) {                                    │   │
+│  │      await I.fillField(this.locators.emailInput, email);            │   │
+│  │      await I.fillField(this.locators.passwordInput, password);      │   │
+│  │      await I.click(this.locators.loginButton);                      │   │
+│  │    },                                                                │   │
+│  │                                                                       │   │
+│  │    // Verifications (public)                                         │   │
+│  │    async verifyLoginError() {                                        │   │
+│  │      await I.see('Your email or password is incorrect!');           │   │
+│  │    }                                                                 │   │
+│  │  };                                                                  │   │
+│  └──────────────────────────────┬──────────────────────────────────────┘   │
+│                                 │                                            │
+│                                 │ uses                                       │
+│                                 ▼                                            │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                      CodeceptJS Actor (I)                            │   │
+│  │                                                                       │   │
+│  │  I.fillField()  I.click()  I.see()  I.waitForElement()              │   │
+│  └──────────────────────────────┬──────────────────────────────────────┘   │
+│                                 │                                            │
+│                                 │ delegates to                               │
+│                                 ▼                                            │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                      Playwright Helper                               │   │
+│  │                                                                       │   │
+│  │  page.fill()  page.click()  page.locator()  page.waitFor()          │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -290,60 +290,60 @@ e2e/
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                         API TESTING ARCHITECTURE                             │
+│                         API TESTING ARCHITECTURE                             │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                              │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                     Feature File (Gherkin)                           │   │
-│  │                                                                       │   │
-│  │  @api @apiOnly                                                       │   │
-│  │  Scenario: Get All Products                                          │   │
-│  │    When the user gets all products via API                           │   │
-│  │    Then the API response code should be 200                          │   │
-│  │    And the products list should not be empty                         │   │
-│  └──────────────────────────────┬──────────────────────────────────────┘   │
-│                                 │                                            │
-│                                 ▼                                            │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                     Step Definition                                  │   │
-│  │                                                                       │   │
-│  │  When('the user gets all products via API', async () => {           │   │
-│  │    testState.apiResponse = await productService.getAllProducts();    │   │
-│  │  });                                                                  │   │
-│  └──────────────────────────────┬──────────────────────────────────────┘   │
-│                                 │                                            │
-│                                 ▼                                            │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                     API Service                                      │   │
-│  │                                                                       │   │
-│  │  // product.api.js                                                   │   │
-│  │  async getAllProducts() {                                            │   │
-│  │    const response = await axios.get(`${API_BASE_URL}/productsList`); │   │
-│  │    return response.data;                                             │   │
-│  │  }                                                                   │   │
-│  └──────────────────────────────┬──────────────────────────────────────┘   │
-│                                 │                                            │
-│                                 ▼                                            │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                     HTTP Client (Axios)                              │   │
-│  │                                                                       │   │
-│  │  GET https://automationexercise.com/api/productsList                 │   │
-│  └──────────────────────────────┬──────────────────────────────────────┘   │
-│                                 │                                            │
-│                                 ▼                                            │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                     Target API                                       │   │
-│  │                                                                       │   │
-│  │  Response: { responseCode: 200, products: [...] }                    │   │
-│  └─────────────────────────────────────────────────────────────────────┘   │
-│                                                                              │
-│  ════════════════════════════════════════════════════════════════════════   │
-│                                                                              │
-│  KEY BENEFIT: API-only mode (apiOnly browser config)                        │
-│  • No browser launched                                                       │
-│  • ~10x faster execution                                                     │
-│  • Ideal for backend validation                                              │
-│                                                                              │
+│                                                                              │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                     Feature File (Gherkin)                           │   │
+│  │                                                                       │   │
+│  │  @api @apiOnly                                                       │   │
+│  │  Scenario: Get All Products                                          │   │
+│  │    When the user gets all products via API                           │   │
+│  │    Then the API response code should be 200                          │   │
+│  │    And the products list should not be empty                         │   │
+│  └──────────────────────────────┬──────────────────────────────────────┘   │
+│                                 │                                            │
+│                                 ▼                                            │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                     Step Definition                                  │   │
+│  │                                                                       │   │
+│  │  When('the user gets all products via API', async () => {           │   │
+│  │    testState.apiResponse = await productService.getAllProducts();    │   │
+│  │  });                                                                  │   │
+│  └──────────────────────────────┬──────────────────────────────────────┘   │
+│                                 │                                            │
+│                                 ▼                                            │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                     API Service                                      │   │
+│  │                                                                       │   │
+│  │  // product.api.js                                                   │   │
+│  │  async getAllProducts() {                                            │   │
+│  │    const response = await axios.get(`${API_BASE_URL}/productsList`); │   │
+│  │    return response.data;                                             │   │
+│  │  }                                                                   │   │
+│  └──────────────────────────────┬──────────────────────────────────────┘   │
+│                                 │                                            │
+│                                 ▼                                            │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                     HTTP Client (Axios)                              │   │
+│  │                                                                       │   │
+│  │  GET https://automationexercise.com/api/productsList                 │   │
+│  └──────────────────────────────┬──────────────────────────────────────┘   │
+│                                 │                                            │
+│                                 ▼                                            │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                     Target API                                       │   │
+│  │                                                                       │   │
+│  │  Response: { responseCode: 200, products: [...] }                    │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
+│  ════════════════════════════════════════════════════════════════════════   │
+│                                                                              │
+│  KEY BENEFIT: API-only mode (apiOnly browser config)                        │
+│  • No browser launched                                                       │
+│  • ~10x faster execution                                                     │
+│  • Ideal for backend validation                                              │
+│                                                                              │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -353,75 +353,79 @@ e2e/
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                         CI/CD PIPELINE ARCHITECTURE                          │
+│                         CI/CD PIPELINE ARCHITECTURE                          │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                              │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                         TRIGGER                                      │   │
-│  │  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐               │   │
-│  │  │  Push   │  │   PR    │  │  Merge  │  │  Cron   │               │   │
-│  │  │ to any  │  │ Created │  │ to main │  │ Schedule│               │   │
-│  │  │ branch  │  │         │  │         │  │ (daily) │               │   │
-│  │  └────┬────┘  └────┬────┘  └────┬────┘  └────┬────┘               │   │
-│  │       │            │            │            │                      │   │
-│  │       └────────────┴─────┬──────┴────────────┘                      │   │
-│  └──────────────────────────┼──────────────────────────────────────────┘   │
-│                             │                                                │
-│                             ▼                                                │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                         GITHUB ACTIONS                               │   │
-│  │                                                                       │   │
-│  │  ┌─────────────────────────────────────────────────────────────┐    │   │
-│  │  │  Job: Setup                                                  │    │   │
-│  │  │  • Checkout code                                             │    │   │
-│  │  │  • Setup Node.js                                             │    │   │
-│  │  │  • Install pnpm                                              │    │   │
-│  │  │  • Cache dependencies                                        │    │   │
-│  │  └─────────────────────────────┬───────────────────────────────┘    │   │
-│  │                                │                                      │   │
-│  │                                ▼                                      │   │
-│  │  ┌─────────────────────────────────────────────────────────────┐    │   │
-│  │  │  Job: Lint & Type Check                                      │    │   │
-│  │  │  • ESLint                                                    │    │   │
-│  │  │  • Prettier                                                  │    │   │
-│  │  └─────────────────────────────┬───────────────────────────────┘    │   │
-│  │                                │                                      │   │
-│  │                                ▼                                      │   │
-│  │  ┌─────────────────────────────────────────────────────────────┐    │   │
-│  │  │  Job: API Tests (Parallel)                                   │    │   │
-│  │  │  • PROFILE=local:@api:apiOnly:playwright                     │    │   │
-│  │  │  • No browser needed                                         │    │   │
-│  │  │  • ~2 minutes                                                │    │   │
-│  │  └─────────────────────────────┬───────────────────────────────┘    │   │
-│  │                                │                                      │   │
-│  │                                ▼                                      │   │
-│  │  ┌─────────────────────────────────────────────────────────────┐    │   │
-│  │  │  Job: E2E Tests (Matrix)                                     │    │   │
-│  │  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐          │    │   │
-│  │  │  │  Chromium   │  │   Firefox   │  │   WebKit    │          │    │   │
-│  │  │  │  @smoke     │  │   @smoke    │  │   @smoke    │          │    │   │
-│  │  │  └─────────────┘  └─────────────┘  └─────────────┘          │    │   │
-│  │  └─────────────────────────────┬───────────────────────────────┘    │   │
-│  │                                │                                      │   │
-│  │                                ▼                                      │   │
-│  │  ┌─────────────────────────────────────────────────────────────┐    │   │
-│  │  │  Job: Generate Reports                                       │    │   │
-│  │  │  • Merge Allure results                                      │    │   │
-│  │  │  • Generate HTML report                                      │    │   │
-│  │  │  • Upload artifacts                                          │    │   │
-│  │  └─────────────────────────────┬───────────────────────────────┘    │   │
-│  │                                │                                      │   │
-│  └────────────────────────────────┼────────────────────────────────────┘   │
-│                                   │                                          │
-│                                   ▼                                          │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                         ARTIFACTS                                    │   │
-│  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐                 │   │
-│  │  │   Allure    │  │  JUnit XML  │  │ Screenshots │                 │   │
-│  │  │   Report    │  │   Results   │  │  & Traces   │                 │   │
-│  │  └─────────────┘  └─────────────┘  └─────────────┘                 │   │
-│  └─────────────────────────────────────────────────────────────────────┘   │
-│                                                                              │
+│                                                                              │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                         TRIGGER                                      │   │
+│  │  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐               │   │
+│  │  │   PR    │  │  Push   │  │  Manual │  │  Cron   │               │   │
+│  │  │ Created │  │ to main │  │ Trigger │  │ Schedule│               │   │
+│  │  │         │  │         │  │         │  │ (daily) │               │   │
+│  │  └────┬────┘  └────┬────┘  └────┬────┘  └────┬────┘               │   │
+│  │       │            │            │            │                      │   │
+│  │       │            └─────┬──────┴────────────┘                      │   │
+│  │       │                  │                                          │   │
+│  │       ▼                  ▼                                          │   │
+│  │  pr-checks.yml      e2e-all.yml                                    │   │
+│  │  (Lint+API smoke)   (Full E2E)                                     │   │
+│  └──────────────────────────┼──────────────────────────────────────────┘   │
+│                             │                                                │
+│                             ▼                                                │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                         GITHUB ACTIONS                               │   │
+│  │                                                                       │   │
+│  │  ┌─────────────────────────────────────────────────────────────┐    │   │
+│  │  │  Job: Setup                                                  │    │   │
+│  │  │  • Checkout code                                             │    │   │
+│  │  │  • Setup Node.js                                             │    │   │
+│  │  │  • Install pnpm                                              │    │   │
+│  │  │  • Cache dependencies                                        │    │   │
+│  │  └─────────────────────────────┬───────────────────────────────┘    │   │
+│  │                                │                                      │   │
+│  │                                ▼                                      │   │
+│  │  ┌─────────────────────────────────────────────────────────────┐    │   │
+│  │  │  Job: Lint & Type Check                                      │    │   │
+│  │  │  • ESLint                                                    │    │   │
+│  │  │  • Prettier                                                  │    │   │
+│  │  └─────────────────────────────┬───────────────────────────────┘    │   │
+│  │                                │                                      │   │
+│  │                                ▼                                      │   │
+│  │  ┌─────────────────────────────────────────────────────────────┐    │   │
+│  │  │  Job: API Tests (Parallel)                                   │    │   │
+│  │  │  • PROFILE=local:@api:apiOnly:playwright                     │    │   │
+│  │  │  • No browser needed                                         │    │   │
+│  │  │  • ~2 minutes                                                │    │   │
+│  │  └─────────────────────────────┬───────────────────────────────┘    │   │
+│  │                                │                                      │   │
+│  │                                ▼                                      │   │
+│  │  ┌─────────────────────────────────────────────────────────────┐    │   │
+│  │  │  Job: E2E Tests (Matrix)                                     │    │   │
+│  │  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐          │    │   │
+│  │  │  │  Chromium   │  │   Firefox   │  │   WebKit    │          │    │   │
+│  │  │  │  @smoke     │  │   @smoke    │  │   @smoke    │          │    │   │
+│  │  │  └─────────────┘  └─────────────┘  └─────────────┘          │    │   │
+│  │  └─────────────────────────────┬───────────────────────────────┘    │   │
+│  │                                │                                      │   │
+│  │                                ▼                                      │   │
+│  │  ┌─────────────────────────────────────────────────────────────┐    │   │
+│  │  │  Job: Generate Reports                                       │    │   │
+│  │  │  • Merge Allure results                                      │    │   │
+│  │  │  • Generate HTML report                                      │    │   │
+│  │  │  • Upload artifacts                                          │    │   │
+│  │  └─────────────────────────────┬───────────────────────────────┘    │   │
+│  │                                │                                      │   │
+│  └────────────────────────────────┼────────────────────────────────────┘   │
+│                                   │                                          │
+│                                   ▼                                          │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                         ARTIFACTS                                    │   │
+│  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐                 │   │
+│  │  │   Allure    │  │  JUnit XML  │  │ Screenshots │                 │   │
+│  │  │   Report    │  │   Results   │  │  & Traces   │                 │   │
+│  │  └─────────────┘  └─────────────┘  └─────────────┘                 │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -431,64 +435,64 @@ e2e/
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                           TEST DATA FLOW                                     │
+│                           TEST DATA FLOW                                     │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                              │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                     STATIC DATA SOURCES                              │   │
-│  │                                                                       │   │
-│  │  testData.js ──────────────┐                                         │   │
-│  │  (base config)             │                                         │   │
-│  │                            ▼                                         │   │
-│  │  testData.local.js ───▶ ┌─────────────────┐                         │   │
-│  │  testData.staging.js ──▶│  Merged Config  │                         │   │
-│  │  testData.prod.js ─────▶│  (per env)      │                         │   │
-│  │                          └────────┬────────┘                         │   │
-│  └───────────────────────────────────┼─────────────────────────────────┘   │
-│                                      │                                       │
-│                                      ▼                                       │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                     DYNAMIC DATA GENERATION                          │   │
-│  │                                                                       │   │
-│  │  userGenerator.js                                                    │   │
-│  │  ┌─────────────────────────────────────────────────────────────┐    │   │
-│  │  │  generateUser() {                                            │    │   │
-│  │  │    return {                                                  │    │   │
-│  │  │      email: `user_${timestamp}_${random}@test.com`,         │    │   │
-│  │  │      name: `TestUser_${timestamp}`,                         │    │   │
-│  │  │      password: 'SecurePass123!'                             │    │   │
-│  │  │    };                                                        │    │   │
-│  │  │  }                                                           │    │   │
-│  │  └─────────────────────────────────────────────────────────────┘    │   │
-│  └───────────────────────────────────┬─────────────────────────────────┘   │
-│                                      │                                       │
-│                                      ▼                                       │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                     TEST STATE MANAGEMENT                            │   │
-│  │                                                                       │   │
-│  │  testState.js (Singleton)                                            │   │
-│  │  ┌─────────────────────────────────────────────────────────────┐    │   │
-│  │  │  state = {                                                   │    │   │
-│  │  │    currentUser: null,      // Active test user              │    │   │
-│  │  │    apiResponse: null,      // Last API response             │    │   │
-│  │  │    cartTotal: null,        // Calculated cart value         │    │   │
-│  │  │    lastResponseTime: null  // Performance metric            │    │   │
-│  │  │  }                                                           │    │   │
-│  │  │                                                              │    │   │
-│  │  │  reset() { /* Clear all state */ }                          │    │   │
-│  │  └─────────────────────────────────────────────────────────────┘    │   │
-│  └───────────────────────────────────┬─────────────────────────────────┘   │
-│                                      │                                       │
-│                                      ▼                                       │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                     DATA LIFECYCLE                                   │   │
-│  │                                                                       │   │
-│  │  Before Scenario ──▶ Generate/Load Data ──▶ Execute Test            │   │
-│  │                                                   │                   │   │
-│  │                                                   ▼                   │   │
-│  │                      After Scenario ◀── Cleanup/Reset State          │   │
-│  └─────────────────────────────────────────────────────────────────────┘   │
-│                                                                              │
+│                                                                              │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                     STATIC DATA SOURCES                              │   │
+│  │                                                                       │   │
+│  │  testData.js ──────────────┐                                         │   │
+│  │  (base config)             │                                         │   │
+│  │                            ▼                                         │   │
+│  │  testData.local.js ─── ┌─────────────────┐                         │   │
+│  │  testData.staging.js ── │  Merged Config  │                         │   │
+│  │  testData.prod.js ───── │  (per env)      │                         │   │
+│  │                          └────────┬────────┘                         │   │
+│  └───────────────────────────────────┼─────────────────────────────────┘   │
+│                                      │                                       │
+│                                      ▼                                       │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                     DYNAMIC DATA GENERATION                          │   │
+│  │                                                                       │   │
+│  │  userGenerator.js                                                    │   │
+│  │  ┌─────────────────────────────────────────────────────────────┐    │   │
+│  │  │  generateUser() {                                            │    │   │
+│  │  │    return {                                                  │    │   │
+│  │  │      email: `user_${timestamp}_${random}@test.com`,         │    │   │
+│  │  │      name: `TestUser_${timestamp}`,                         │    │   │
+│  │  │      password: 'SecurePass123!'                             │    │   │
+│  │  │    };                                                        │    │   │
+│  │  │  }                                                           │    │   │
+│  │  └─────────────────────────────────────────────────────────────┘    │   │
+│  └───────────────────────────────────┬─────────────────────────────────┘   │
+│                                      │                                       │
+│                                      ▼                                       │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                     TEST STATE MANAGEMENT                            │   │
+│  │                                                                       │   │
+│  │  testState.js (Singleton)                                            │   │
+│  │  ┌─────────────────────────────────────────────────────────────┐    │   │
+│  │  │  state = {                                                   │    │   │
+│  │  │    currentUser: null,      // Active test user              │    │   │
+│  │  │    apiResponse: null,      // Last API response             │    │   │
+│  │  │    cartTotal: null,        // Calculated cart value         │    │   │
+│  │  │    lastResponseTime: null  // Performance metric            │    │   │
+│  │  │  }                                                           │    │   │
+│  │  │                                                              │    │   │
+│  │  │  reset() { /* Clear all state */ }                          │    │   │
+│  │  └─────────────────────────────────────────────────────────────┘    │   │
+│  └───────────────────────────────────┬─────────────────────────────────┘   │
+│                                      │                                       │
+│                                      ▼                                       │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                     DATA LIFECYCLE                                   │   │
+│  │                                                                       │   │
+│  │  Before Scenario ── Generate/Load Data ── Execute Test            │   │
+│  │                                                   │                   │   │
+│  │                                                   ▼                   │   │
+│  │                      After Scenario ── Cleanup/Reset State          │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -502,16 +506,16 @@ When running API tests with `apiOnly` or `api` browser profile, the framework **
 
 ```javascript
 function isApiOnlyMode(browser) {
-  return browser === 'apiOnly' || browser === 'api';
+  return browser === 'apiOnly' || browser === 'api';
 }
 
 // When API-only mode is detected:
 if (isApiOnlyMode(browser)) {
-  return {
-    REST: { endpoint: envConfig.apiBaseUrl, timeout: 30000 },
-    ChaiWrapper: { require: 'codeceptjs-chai' },
-  };
-  // Note: Playwright helper is NOT included
+  return {
+    REST: { endpoint: envConfig.apiBaseUrl, timeout: 30000 },
+    ChaiWrapper: { require: 'codeceptjs-chai' },
+  };
+  // Note: Playwright helper is NOT included
 }
 ```
 
@@ -544,10 +548,10 @@ pnpm e2e local:@apiOnly:apiOnly
 
 ```javascript
 Playwright: {
-  restart: 'session',      // Keep same browser instance across scenarios
-  keepBrowserState: true,  // Preserve browser state between tests
-  keepCookies: false,      // Clear cookies between scenarios (for isolation)
-  manualStart: false,      // Auto-start browser when needed
+  restart: 'session',      // Keep same browser instance across scenarios
+  keepBrowserState: true,  // Preserve browser state between tests
+  keepCookies: false,      // Clear cookies between scenarios (for isolation)
+  manualStart: false,      // Auto-start browser when needed
 }
 ```
 
@@ -555,59 +559,59 @@ Playwright: {
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                      BROWSER SESSION MANAGEMENT                              │
+│                      BROWSER SESSION MANAGEMENT                              │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                              │
-│  Configuration: restart: 'session' (getHelpers.js)                          │
-│                                                                              │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                     SESSION MODE                                     │   │
-│  │                                                                       │   │
-│  │  Test Suite Start                                                    │   │
-│  │       │                                                               │   │
-│  │       ▼                                                               │   │
-│  │  ┌─────────────────┐                                                 │   │
-│  │  │  Launch Browser │  ◀── Single browser instance                    │   │
-│  │  └────────┬────────┘                                                 │   │
-│  │           │                                                           │   │
-│  │           ▼                                                           │   │
-│  │  ┌─────────────────────────────────────────────────────────────┐    │   │
-│  │  │  Scenario 1                                                  │    │   │
-│  │  │  • New browser context                                       │    │   │
-│  │  │  • Fresh cookies/storage                                     │    │   │
-│  │  │  • Execute test                                              │    │   │
-│  │  │  • Context closed                                            │    │   │
-│  │  └─────────────────────────────────────────────────────────────┘    │   │
-│  │           │                                                           │   │
-│  │           ▼  (Browser stays open)                                    │   │
-│  │  ┌─────────────────────────────────────────────────────────────┐    │   │
-│  │  │  Scenario 2                                                  │    │   │
-│  │  │  • New browser context                                       │    │   │
-│  │  │  • Fresh cookies/storage                                     │    │   │
-│  │  │  • Execute test                                              │    │   │
-│  │  │  • Context closed                                            │    │   │
-│  │  └─────────────────────────────────────────────────────────────┘    │   │
-│  │           │                                                           │   │
-│  │           ▼                                                           │   │
-│  │  ┌─────────────────┐                                                 │   │
-│  │  │  Close Browser  │  ◀── Only at suite end                          │   │
-│  │  └─────────────────┘                                                 │   │
-│  │                                                                       │   │
-│  └─────────────────────────────────────────────────────────────────────┘   │
-│                                                                              │
-│  ════════════════════════════════════════════════════════════════════════   │
-│                                                                              │
-│  BENEFITS:                                                                   │
-│  • Faster execution (no browser restart per test)                           │
-│  • Test isolation via contexts (clean state)                                │
-│  • Reduced resource usage                                                    │
-│                                                                              │
-│  MANUAL CLEANUP STEPS (when needed):                                        │
-│  • When('the user clears all cookies')                                      │
-│  • When('the user clears session storage')                                  │
-│  • When('the user clears local storage')                                    │
-│  • When('the user resets browser state')                                    │
-│                                                                              │
+│                                                                              │
+│  Configuration: restart: 'session' (getHelpers.js)                          │
+│                                                                              │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                     SESSION MODE                                     │   │
+│  │                                                                       │   │
+│  │  Test Suite Start                                                    │   │
+│  │       │                                                               │   │
+│  │       ▼                                                               │   │
+│  │  ┌─────────────────┐                                                 │   │
+│  │  │  Launch Browser │   ── Single browser instance                    │   │
+│  │  └────────┬────────┘                                                 │   │
+│  │           │                                                           │   │
+│  │           ▼                                                           │   │
+│  │  ┌─────────────────────────────────────────────────────────────┐    │   │
+│  │  │  Scenario 1                                                  │    │   │
+│  │  │  • New browser context                                       │    │   │
+│  │  │  • Fresh cookies/storage                                     │    │   │
+│  │  │  • Execute test                                              │    │   │
+│  │  │  • Context closed                                            │    │   │
+│  │  └─────────────────────────────────────────────────────────────┘    │   │
+│  │           │                                                           │   │
+│  │           ▼  (Browser stays open)                                    │   │
+│  │  ┌─────────────────────────────────────────────────────────────┐    │   │
+│  │  │  Scenario 2                                                  │    │   │
+│  │  │  • New browser context                                       │    │   │
+│  │  │  • Fresh cookies/storage                                     │    │   │
+│  │  │  • Execute test                                              │    │   │
+│  │  │  • Context closed                                            │    │   │
+│  │  └─────────────────────────────────────────────────────────────┘    │   │
+│  │           │                                                           │   │
+│  │           ▼                                                           │   │
+│  │  ┌─────────────────┐                                                 │   │
+│  │  │  Close Browser  │   ── Only at suite end                          │   │
+│  │  └─────────────────┘                                                 │   │
+│  │                                                                       │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
+│  ════════════════════════════════════════════════════════════════════════   │
+│                                                                              │
+│  BENEFITS:                                                                   │
+│  • Faster execution (no browser restart per test)                           │
+│  • Test isolation via contexts (clean state)                                │
+│  • Reduced resource usage                                                    │
+│                                                                              │
+│  MANUAL CLEANUP STEPS (when needed):                                        │
+│  • When('the user clears all cookies')                                      │
+│  • When('the user clears session storage')                                  │
+│  • When('the user clears local storage')                                    │
+│  • When('the user resets browser state')                                    │
+│                                                                              │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -659,58 +663,58 @@ Used with AI analysis to detect performance issues, failed API calls, and networ
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                         REPORTING ARCHITECTURE                               │
+│                         REPORTING ARCHITECTURE                               │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                              │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                     TEST EXECUTION                                   │   │
-│  │                                                                       │   │
-│  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐                  │   │
-│  │  │   Test 1    │  │   Test 2    │  │   Test N    │                  │   │
-│  │  │  (Pass)     │  │  (Fail)     │  │  (Skip)     │                  │   │
-│  │  └──────┬──────┘  └──────┬──────┘  └──────┬──────┘                  │   │
-│  │         │                │                │                          │   │
-│  │         └────────────────┼────────────────┘                          │   │
-│  │                          │                                            │   │
-│  └──────────────────────────┼──────────────────────────────────────────┘   │
-│                             │                                                │
-│                             ▼                                                │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                     REPORT GENERATION                                │   │
-│  │                                                                       │   │
-│  │  ┌─────────────────────────────────────────────────────────────┐    │   │
-│  │  │  Allure Results (./output/allure-results/)                   │    │   │
-│  │  │  • Test steps with timing                                    │    │   │
-│  │  │  • Screenshots on failure                                    │    │   │
-│  │  │  • Environment info                                          │    │   │
-│  │  │  • Categories & severity                                     │    │   │
-│  │  └─────────────────────────────────────────────────────────────┘    │   │
-│  │                                                                       │   │
-│  │  ┌─────────────────────────────────────────────────────────────┐    │   │
-│  │  │  JUnit XML (./output/result-[hash].xml)                      │    │   │
-│  │  │  • CI/CD integration                                         │    │   │
-│  │  │  • Test counts & durations                                   │    │   │
-│  │  │  • Failure messages                                          │    │   │
-│  │  └─────────────────────────────────────────────────────────────┘    │   │
-│  │                                                                       │   │
-│  │  ┌─────────────────────────────────────────────────────────────┐    │   │
-│  │  │  Screenshots & Traces                                        │    │   │
-│  │  │  • Full page screenshots on failure                          │    │   │
-│  │  │  • Playwright traces for debugging                           │    │   │
-│  │  └─────────────────────────────────────────────────────────────┘    │   │
-│  │                                                                       │   │
-│  └─────────────────────────────────────────────────────────────────────┘   │
-│                                                                              │
-│  ════════════════════════════════════════════════════════════════════════   │
-│                                                                              │
-│  VIEWING REPORTS:                                                            │
-│                                                                              │
-│  # Generate Allure HTML report                                               │
-│  npx allure generate ./output/allure-results --clean -o ./output/allure     │
-│                                                                              │
-│  # Open report in browser                                                    │
-│  npx allure open ./output/allure                                            │
-│                                                                              │
+│                                                                              │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                     TEST EXECUTION                                   │   │
+│  │                                                                       │   │
+│  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐                  │   │
+│  │  │   Test 1    │  │   Test 2    │  │   Test N    │                  │   │
+│  │  │  (Pass)     │  │  (Fail)     │  │  (Skip)     │                  │   │
+│  │  └──────┬──────┘  └──────┬──────┘  └──────┬──────┘                  │   │
+│  │         │                │                │                          │   │
+│  │         └────────────────┼────────────────┘                          │   │
+│  │                          │                                            │   │
+│  └──────────────────────────┼──────────────────────────────────────────┘   │
+│                             │                                                │
+│                             ▼                                                │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                     REPORT GENERATION                                │   │
+│  │                                                                       │   │
+│  │  ┌─────────────────────────────────────────────────────────────┐    │   │
+│  │  │  Allure Results (./output/allure-results/)                   │    │   │
+│  │  │  • Test steps with timing                                    │    │   │
+│  │  │  • Screenshots on failure                                    │    │   │
+│  │  │  • Environment info                                          │    │   │
+│  │  │  • Categories & severity                                     │    │   │
+│  │  └─────────────────────────────────────────────────────────────┘    │   │
+│  │                                                                       │   │
+│  │  ┌─────────────────────────────────────────────────────────────┐    │   │
+│  │  │  JUnit XML (./output/result-[hash].xml)                      │    │   │
+│  │  │  • CI/CD integration                                         │    │   │
+│  │  │  • Test counts & durations                                   │    │   │
+│  │  │  • Failure messages                                          │    │   │
+│  │  └─────────────────────────────────────────────────────────────┘    │   │
+│  │                                                                       │   │
+│  │  ┌─────────────────────────────────────────────────────────────┐    │   │
+│  │  │  Screenshots & Traces                                        │    │   │
+│  │  │  • Full page screenshots on failure                          │    │   │
+│  │  │  • Playwright traces for debugging                           │    │   │
+│  │  └─────────────────────────────────────────────────────────────┘    │   │
+│  │                                                                       │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
+│  ════════════════════════════════════════════════════════════════════════   │
+│                                                                              │
+│  VIEWING REPORTS:                                                            │
+│                                                                              │
+│  # Generate Allure HTML report                                               │
+│  npx allure generate ./output/allure-results --clean -o ./output/allure     │
+│                                                                              │
+│  # Open report in browser                                                    │
+│  npx allure open ./output/allure                                            │
+│                                                                              │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -719,52 +723,55 @@ Used with AI analysis to detect performance issues, failed API calls, and networ
 Reports are **automatically generated** after each test run:
 
 ```
-┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
-│   Bootstrap     │────▶│   Test Run      │────▶│  allure-results │────▶│    Teardown     │
-│  (clean old)    │     │   (codeceptjs)  │     │  (JSON files)   │     │ (generate HTML) │
-└─────────────────┘     └─────────────────┘     └─────────────────┘     └─────────────────┘
-        │                                                                       │
-        │  Deletes:                                                             │  Creates:
-        │  - output/allure-results/                                             │  - allure-report/
-        │  - allure-report/                                                     │
-        ▼                                                                       ▼
-  Fresh start each run                                              Console shows view command
+┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
+│   Bootstrap     │──── │   Test Run      │──── │  allure-results │──── │    Teardown     │
+│  (clean old)    │     │   (codeceptjs)  │     │  (JSON files)   │     │ (generate HTML) │
+└─────────────────┘     └─────────────────┘     └─────────────────┘     └─────────────────┘
+        │                                                                       │
+        │  Deletes:                                                             │  Creates:
+        │  - output/allure-results/                                             │  - allure-report/
+        │  - allure-report/                                                     │
+        ▼                                                                       ▼
+  Fresh start each run                                              Console shows view command
 ```
 
 ### Bootstrap & Teardown (Separate Files)
 
 **`e2e/config/bootstrap.js`** - Runs before test execution:
+
 ```javascript
 async function bootstrap(profile) {
-  console.log(`Profile: ${profile}`);
-  
-  // Clean up previous report directories for fresh run
-  if (fs.existsSync(allureResultsDir)) {
-    fs.rmSync(allureResultsDir, { recursive: true, force: true });
-  }
-  if (fs.existsSync(allureReportDir)) {
-    fs.rmSync(allureReportDir, { recursive: true, force: true });
-  }
+  console.log(`Profile: ${profile}`);
+  
+  // Clean up previous report directories for fresh run
+  if (fs.existsSync(allureResultsDir)) {
+    fs.rmSync(allureResultsDir, { recursive: true, force: true });
+  }
+  if (fs.existsSync(allureReportDir)) {
+    fs.rmSync(allureReportDir, { recursive: true, force: true });
+  }
 }
 ```
 
 **`e2e/config/teardown.js`** - Runs after test execution:
+
 ```javascript
 async function teardown() {
-  execSync('npx allure generate ./output/allure-results -o ./allure-report --clean');
-  console.log('📊 VIEW TEST REPORT: pnpm run allure:open');
+  execSync('npx allure generate ./output/allure-results -o ./allure-report --clean');
+  console.log(' VIEW TEST REPORT: pnpm run allure:open');
 }
 ```
 
 **`e2e/codecept.conf.js`** - Configuration:
+
 ```javascript
 const { bootstrap } = require('./config/bootstrap');
 const { teardown } = require('./config/teardown');
 
 exports.config = {
-  bootstrap: () => bootstrap(profile),
-  teardown,
-  // ... other config
+  bootstrap: () => bootstrap(profile),
+  teardown,
+  // ... other config
 };
 ```
 
@@ -772,15 +779,15 @@ exports.config = {
 
 ```
 ============================================================
-📊 VIEW TEST REPORT:
-   pnpm run allure:open
+ VIEW TEST REPORT:
+   pnpm run allure:open
 
-📊 REGENERATE & VIEW REPORT:
-   pnpm run allure:report
+ REGENERATE & VIEW REPORT:
+   pnpm run allure:report
 
-♿ ACCESSIBILITY REPORT (when running @accessibility tests):
-   📄 /path/to/e2e/ACCESSIBILITY_REPORT.md
-   Open with: open ACCESSIBILITY_REPORT.md
+ ACCESSIBILITY REPORT (when running @accessibility tests):
+    /path/to/e2e/ACCESSIBILITY_REPORT.md
+   Open with: open ACCESSIBILITY_REPORT.md
 ============================================================
 ```
 
@@ -793,7 +800,8 @@ e2e/ACCESSIBILITY_REPORT.md
 ```
 
 **Features:**
-- 🔴 Critical, 🟠 Serious, 🟡 Moderate, 🟢 Minor violation indicators
+
+- Critical, Serious, Moderate, Minor violation indicators
 - WCAG references with Deque University remediation links
 - Affected elements with CSS selectors
 - Summary tables per page/scan type
@@ -815,10 +823,10 @@ pnpm run allure:generate
 
 ```javascript
 allure: {
-  enabled: true,
-  require: 'allure-codeceptjs',
-  outputDir: './output/allure-results',
-  enableScreenshotDiffPlugin: true,
+  enabled: true,
+  require: 'allure-codeceptjs',
+  outputDir: './output/allure-results',
+  enableScreenshotDiffPlugin: true,
 }
 ```
 
@@ -830,57 +838,57 @@ allure: {
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                      MULTI-TEAM SCALING MODEL                                │
+│                      MULTI-TEAM SCALING MODEL                                │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                              │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                     SHARED FRAMEWORK (NPM Package)                   │   │
-│  │                                                                       │   │
-│  │  @company/test-framework                                             │   │
-│  │  ├── helpers/          # Common helpers                              │   │
-│  │  ├── components/       # Shared UI components                        │   │
-│  │  ├── config/           # Base configuration                          │   │
-│  │  ├── utils/            # Utilities                                   │   │
-│  │  └── ci-templates/     # GitHub Actions templates                    │   │
-│  │                                                                       │   │
-│  └──────────────────────────────┬──────────────────────────────────────┘   │
-│                                 │                                            │
-│            ┌────────────────────┼────────────────────┐                      │
-│            │                    │                    │                      │
-│            ▼                    ▼                    ▼                      │
-│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐            │
-│  │    TEAM A       │  │    TEAM B       │  │    TEAM C       │            │
-│  │  (Auth Domain)  │  │(Products Domain)│  │(Checkout Domain)│            │
-│  │                 │  │                 │  │                 │            │
-│  │  tests/         │  │  tests/         │  │  tests/         │            │
-│  │  ├── auth/      │  │  ├── products/  │  │  ├── checkout/  │            │
-│  │  └── user/      │  │  └── search/    │  │  └── payment/   │            │
-│  │                 │  │                 │  │                 │            │
-│  │  pages/         │  │  pages/         │  │  pages/         │            │
-│  │  └── auth/      │  │  └── products/  │  │  └── checkout/  │            │
-│  │                 │  │                 │  │                 │            │
-│  │  package.json   │  │  package.json   │  │  package.json   │            │
-│  │  (depends on    │  │  (depends on    │  │  (depends on    │            │
-│  │   framework)    │  │   framework)    │  │   framework)    │            │
-│  └─────────────────┘  └─────────────────┘  └─────────────────┘            │
-│            │                    │                    │                      │
-│            └────────────────────┼────────────────────┘                      │
-│                                 │                                            │
-│                                 ▼                                            │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                     CENTRALIZED CI/CD                                │   │
-│  │                                                                       │   │
-│  │  • Nightly full regression across all teams                          │   │
-│  │  • Per-team PR validation                                            │   │
-│  │  • Shared reporting dashboard                                        │   │
-│  │  • Cross-team integration tests                                      │   │
-│  │                                                                       │   │
-│  └─────────────────────────────────────────────────────────────────────┘   │
-│                                                                              │
+│                                                                              │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                     SHARED FRAMEWORK (NPM Package)                   │   │
+│  │                                                                       │   │
+│  │  @company/test-framework                                             │   │
+│  │  ├── helpers/          # Common helpers                              │   │
+│  │  ├── components/       # Shared UI components                        │   │
+│  │  ├── config/           # Base configuration                          │   │
+│  │  ├── utils/            # Utilities                                   │   │
+│  │  └── ci-templates/     # GitHub Actions templates                    │   │
+│  │                                                                       │   │
+│  └──────────────────────────────┬──────────────────────────────────────┘   │
+│                                 │                                            │
+│            ┌────────────────────┼────────────────────┐                      │
+│            │                    │                    │                      │
+│            ▼                    ▼                    ▼                      │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐            │
+│  │    TEAM A       │  │    TEAM B       │  │    TEAM C       │            │
+│  │  (Auth Domain)  │  │(Products Domain)│  │(Checkout Domain)│            │
+│  │                 │  │                 │  │                 │            │
+│  │  tests/         │  │  tests/         │  │  tests/         │            │
+│  │  ├── auth/      │  │  ├── products/  │  │  ├── checkout/  │            │
+│  │  └── user/      │  │  └── search/    │  │  └── payment/   │            │
+│  │                 │  │                 │  │                 │            │
+│  │  pages/         │  │  pages/         │  │  pages/         │            │
+│  │  └── auth/      │  │  └── products/  │  │  └── checkout/  │            │
+│  │                 │  │                 │  │                 │            │
+│  │  package.json   │  │  package.json   │  │  package.json   │            │
+│  │  (depends on    │  │  (depends on    │  │  (depends on    │            │
+│  │   framework)    │  │   framework)    │  │   framework)    │            │
+│  └─────────────────┘  └─────────────────┘  └─────────────────┘            │
+│            │                    │                    │                      │
+│            └────────────────────┼────────────────────┘                      │
+│                                 │                                            │
+│                                 ▼                                            │
+│  ┌─────────────────────────────────────────────────────────────────────┐   │
+│  │                     CENTRALIZED CI/CD                                │   │
+│  │                                                                       │   │
+│  │  • Nightly full regression across all teams                          │   │
+│  │  • Per-team PR validation                                            │   │
+│  │  • Shared reporting dashboard                                        │   │
+│  │  • Cross-team integration tests                                      │   │
+│  │                                                                       │   │
+│  └─────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-*Document Version: 1.0*  
+*Document Version: 1.1*  
 *Last Updated: June 2026*

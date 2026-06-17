@@ -9,6 +9,9 @@ const stepFileMatch = /\.steps\.js$/;
 
 const defaultProfile = 'local:@smoke:chromeHeadless:playwright';
 
+// Tags to exclude from Docker/CI runs (API-only, performance, and MCP tests)
+const defaultExcludeTags = '@apiOnly|@performance|@playwrightMCP|@mcp';
+
 function parseProfile(profileString) {
   const parts = profileString.split(':');
   return {
@@ -17,6 +20,7 @@ function parseProfile(profileString) {
     browser: parts[2] || 'chromeHeadless',
     helper: parts[3] || 'playwright',
     withHeal: parts[4] === 'true',
+    excludeTags: parts[5] || (process.env.CI ? defaultExcludeTags : ''),
   };
 }
 
@@ -68,6 +72,9 @@ function aggregate(profileString) {
   console.log(`Browser: ${profile.browser}`);
   console.log(`Helper: ${profile.helper}`);
   console.log(`Base URL: ${envConfig.baseUrl}`);
+  if (profile.excludeTags) {
+    console.log(`Excluding: ${profile.excludeTags}`);
+  }
   console.log('========================');
   
   const stepsFiles = scanStepFiles(testsPath, stepFileMatch);
@@ -83,7 +90,7 @@ function aggregate(profileString) {
     testProfile: () => profile,
   };
   
-  return {
+  const result = {
     include: includeWithEnv,
     grep: profile.suite,
     steps: stepsFiles,
@@ -92,6 +99,13 @@ function aggregate(profileString) {
     environment: profile.environment,
     envConfig,
   };
+
+  // Add grepInvert if excludeTags is specified
+  if (profile.excludeTags) {
+    result.grepInvert = profile.excludeTags;
+  }
+ 
+  return result;
 }
 
 module.exports = {

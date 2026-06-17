@@ -68,7 +68,7 @@ jobs:
         run: pnpm e2e:dry-run || true
 
   smoke-test:
-    name: Smoke Test
+    name: API Smoke Test
     runs-on: ubuntu-latest
     needs: [lint, type-check]
     steps:
@@ -93,11 +93,7 @@ jobs:
 
       - name: Install Playwright browsers
         working-directory: e2e
-        run: pnpm exec playwright install --with-deps chromium
-
-      - name: Run smoke tests
-        working-directory: e2e
-        run: pnpm e2e local:@api:chromeHeadless
+        run: pnpm e2e local:@api:apiOnly
         continue-on-error: true
 
       - name: Upload test artifacts
