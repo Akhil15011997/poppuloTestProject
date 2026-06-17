@@ -86,6 +86,10 @@ jobs:
           browser: ${{ inputs.browser || 'chromeHeadless' }}
           use-docker: 'true'
           docker-image: ${{ env.DOCKER_IMAGE }}
+          mailgun-api-key: ${{ secrets.MAILGUN_SENDING_API_KEY }}
+          mailgun-domain: ${{ secrets.MAILGUN_DOMAIN }}
+          mailgun-from-email: ${{ secrets.MAILGUN_FROM_EMAIL }}
+          mailgun-mock-mode: ${{ secrets.MAILGUN_SENDING_API_KEY != '' && 'false' || 'true' }}
 
   # Cross-browser tests disabled - Docker image only has Chromium
   # Uncomment and update Dockerfile to include Firefox/WebKit if needed

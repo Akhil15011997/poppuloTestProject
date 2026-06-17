@@ -91,8 +91,13 @@ jobs:
         working-directory: e2e
         run: pnpm install --frozen-lockfile
 
-      - name: Install Playwright browsers
+      - name: Run API smoke tests
         working-directory: e2e
+        env:
+          mailgun-api-key: ${{ secrets.MAILGUN_SENDING_API_KEY }}
+          mailgun-domain: ${{ secrets.MAILGUN_DOMAIN }}
+          mailgun-from-email: ${{ secrets.MAILGUN_FROM_EMAIL }}
+          mailgun-mock-mode: ${{ secrets.MAILGUN_SENDING_API_KEY != '' && 'false' || 'true' }}
         run: pnpm e2e local:@api:apiOnly
         continue-on-error: true
 
