@@ -7,7 +7,7 @@ Get up and running with the E2E test framework in under 5 minutes.
 ## Prerequisites
 
 ```
-Node.js >= 18  |  pnpm >= 9.1.0
+Node.js >= 22  |  pnpm >= 9.1.0
 ```
 
 ---

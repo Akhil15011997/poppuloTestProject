@@ -1,3 +1,5 @@
+# *This is not related to the project. Added just to showcase the email testing functionality*
+
 # Email Testing with Mailgun
 
 This document explains how to set up and use email testing capabilities in the E2E framework using Mailgun.
