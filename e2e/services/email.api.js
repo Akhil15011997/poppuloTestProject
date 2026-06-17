@@ -1,9 +1,19 @@
 const axios = require('axios');
 const FormData = require('form-data');
-const path = require('path');
+const path = require('node:path');
+const fs = require('node:fs');
 
 // Load environment variables from .env file
-require('dotenv').config({ path: path.join(__dirname, '../.env') });
+const envPaths = [
+  path.join(__dirname, '../.env'),
+  path.join(__dirname, '../../.env')
+];
+
+envPaths.forEach(envPath => {
+  if (fs.existsSync(envPath)) {
+    require('dotenv').config({ path: envPath });
+  }
+});
 
 const MAILGUN_API_BASE = 'https://api.mailgun.net/v3';
 
