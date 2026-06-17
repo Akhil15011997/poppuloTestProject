@@ -143,7 +143,7 @@ jobs:
           path: gh-pages
 
       - name: Generate Allure Report
-        uses: simple-elf/allure-report-action@v1.9
+        uses: simple-elf/allure-report-action@v1.12
         if: always()
         with:
           allure_results: merged-allure-results
