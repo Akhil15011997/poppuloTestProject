@@ -49,6 +49,11 @@ env:
   NODE_VERSION: '22'
   PNPM_VERSION: '9.1.0'
 
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 jobs:
   e2e-tests:
     name: E2E Tests - ${{ inputs.suite }} (${{ inputs.browser }})
@@ -103,13 +108,20 @@ jobs:
           ref: gh-pages
           path: gh-pages
 
-      - name: Generate Allure Report
-        uses: simple-elf/allure-report-action@v1.12
+      - name: Install Allure CLI
         if: always()
-        with:
-          allure_results: e2e/allure-results
-          allure_history: allure-history
-          keep_reports: 20
+        run: |
+          curl -o allure-2.32.0.tgz -Ls https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.32.0/allure-commandline-2.32.0.tgz
+          tar -zxvf allure-2.32.0.tgz
+          echo "$PWD/allure-2.32.0/bin" >> $GITHUB_PATH
+
+      - name: Copy Allure history
+        if: always()
+        run: |
+          mkdir -p allure-history
+          if [ -d "gh-pages/history" ]; then
+            cp -r gh-pages/history e2e/allure-results/history || true
+          fi
 
       - name: Publish Allure Report to GitHub Pages
         if: always()
