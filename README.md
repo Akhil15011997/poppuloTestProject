@@ -860,4 +860,4 @@ Simply copy the prompt and paste into your AI assistant!
 
 ## 📄 License
 
-ISC
+N/A

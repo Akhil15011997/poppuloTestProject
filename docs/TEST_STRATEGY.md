@@ -21,15 +21,16 @@ Our testing approach follows the **Testing Pyramid** principle with emphasis on:
 
 | Category | Purpose | Execution Time | Frequency |
 |----------|---------|----------------|-----------|
-| **Smoke** | Critical path validation | < 5 min | Every commit |
-| **Regression** | Full feature coverage | 15-30 min | Daily/PR merge |
-| **API** | Backend service validation | < 2 min | Every commit |
-| **Performance** | Response time baselines | 5-10 min | Nightly |
-| **Accessibility** | WCAG compliance | 10-15 min | Weekly/Release |
+| **Regression** | Full feature coverage | 5-8 min | Daily/PR merge |
+| **Smoke API** | Backend service validation | < 2 min | Every commit |
+| **Performance** | Response time baselines | 2-3 min | Nightly |
+| **Accessibility** | WCAG compliance | 2-3 min | Local runs |
+| **MCP** | AI-assisted browser testing | 1-2 min | Local runs |
 
 ### 1.3 Test Scope
 
 **In Scope:**
+
 - User authentication (login, registration, logout)
 - Product browsing and search
 - Cart operations
@@ -39,6 +40,7 @@ Our testing approach follows the **Testing Pyramid** principle with emphasis on:
 - Mobile responsiveness
 
 **Out of Scope (for initial phase):**
+
 - Payment gateway integration (third-party)
 - Email verification flows
 - Load/stress testing at scale
@@ -68,6 +70,7 @@ Our testing approach follows the **Testing Pyramid** principle with emphasis on:
 ### 2.2 Layer Responsibilities
 
 #### UI Layer (E2E Tests)
+
 - **Purpose:** Validate complete user journeys through the browser
 - **Tools:** CodeceptJS + Playwright
 - **Location:** `e2e/tests/features/`
@@ -78,6 +81,7 @@ Our testing approach follows the **Testing Pyramid** principle with emphasis on:
   - Slowest but highest confidence
 
 #### API Layer
+
 - **Purpose:** Validate backend services without UI overhead
 - **Tools:** Axios + CodeceptJS REST helper
 - **Location:** `e2e/services/`, `e2e/tests/features/api/`
@@ -88,6 +92,7 @@ Our testing approach follows the **Testing Pyramid** principle with emphasis on:
   - Response time monitoring
 
 #### Integration Layer
+
 - **Purpose:** Validate interactions between components
 - **Approach:** API-driven setup + UI verification
 - **Example:** Create user via API → Verify login via UI
@@ -143,7 +148,7 @@ Our testing approach follows the **Testing Pyramid** principle with emphasis on:
 
 ## 4. CI/CD Integration
 
-### 4.1 Pipeline Architecture
+### Pipeline Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -252,6 +257,7 @@ PROFILE=staging:@smoke:firefox:playwright
 ### 5.4 Shared vs Team-Specific
 
 **Shared (Framework Package):**
+
 - Core helpers and utilities
 - Base page objects
 - CI/CD templates
@@ -259,6 +265,7 @@ PROFILE=staging:@smoke:firefox:playwright
 - Reporting setup
 
 **Team-Specific:**
+
 - Feature-specific tests
 - Domain page objects
 - Test data for their services
@@ -266,93 +273,9 @@ PROFILE=staging:@smoke:firefox:playwright
 
 ---
 
-## 6. Microservices vs Monolith Testing
+## 6. Test Data & Environment Management
 
-### 6.1 Monolithic Application Testing
-
-**Current Approach (AutomationExercise):**
-```
-┌─────────────────────────────────────────┐
-│           Monolithic App                 │
-│  ┌─────┐  ┌─────┐  ┌─────┐  ┌─────┐   │
-│  │ UI  │──│ API │──│ DB  │──│Logic│   │
-│  └─────┘  └─────┘  └─────┘  └─────┘   │
-└─────────────────────────────────────────┘
-        │
-        ▼
-┌─────────────────────────────────────────┐
-│         E2E Test Suite                   │
-│  • Full stack testing                    │
-│  • Single deployment target              │
-│  • Shared database state                 │
-└─────────────────────────────────────────┘
-```
-
-### 6.2 Microservices Testing Strategy
-
-**Recommended Approach for Microservices:**
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    Microservices Architecture                    │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  ┌─────────┐    ┌─────────┐    ┌─────────┐    ┌─────────┐      │
-│  │  Auth   │    │ Product │    │  Cart   │    │ Payment │      │
-│  │ Service │    │ Service │    │ Service │    │ Service │      │
-│  └────┬────┘    └────┬────┘    └────┬────┘    └────┬────┘      │
-│       │              │              │              │             │
-│       ▼              ▼              ▼              ▼             │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │                   API Gateway                            │   │
-│  └─────────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────────┘
-
-Testing Layers:
-┌─────────────────────────────────────────────────────────────────┐
-│ Contract Tests  │ Verify API contracts between services         │
-│ Component Tests │ Test individual services in isolation         │
-│ Integration     │ Test service interactions                     │
-│ E2E Tests       │ Critical user journeys only                   │
-└─────────────────────────────────────────────────────────────────┘
-```
-
-### 6.3 Key Differences
-
-| Aspect | Monolith | Microservices |
-|--------|----------|---------------|
-| **Test Scope** | Full application | Per-service + integration |
-| **Data Setup** | Shared DB | Service-specific + mocks |
-| **Deployment** | Single artifact | Independent services |
-| **Contract Testing** | Optional | Essential |
-| **Test Isolation** | Harder | Easier with containers |
-
-### 6.4 Contract Testing Approach
-
-For microservices, implement **Consumer-Driven Contract Testing**:
-
-```javascript
-// Example: Product Service Contract
-{
-  "consumer": "CartService",
-  "provider": "ProductService",
-  "interactions": [
-    {
-      "description": "Get product by ID",
-      "request": { "method": "GET", "path": "/api/products/1" },
-      "response": {
-        "status": 200,
-        "body": { "id": 1, "name": "string", "price": "string" }
-      }
-    }
-  ]
-}
-```
-
----
-
-## 7. Test Data & Environment Management
-
-### 7.1 Test Data Strategy
+### 6.1 Test Data Strategy
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -376,15 +299,15 @@ For microservices, implement **Consumer-Driven Contract Testing**:
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-### 7.2 Environment Configuration
+### 6.2 Environment Configuration
 
 | Environment | Purpose | Data Policy | Access |
 |-------------|---------|-------------|--------|
-| **Local** | Development | Freely mutable | Developers |
-| **Staging** | Integration | Reset nightly | QE + Dev |
-| **Production** | Smoke only | Read-only | Automated |
+| **Local** | Development | | Developers + QE |
+| **Staging** | Integration | | Developers + QE + Product Owners + Delivery Managers |
+| **Production** | Smoke only | Read-only | All |
 
-### 7.3 Data Isolation Patterns
+### 6.3 Data Isolation Patterns
 
 ```javascript
 // Pattern 1: Generate unique data per test
@@ -404,18 +327,19 @@ After(async () => {
 
 ---
 
-## 8. Test Reliability & Flaky Test Management
+## 7. Test Reliability & Flaky Test Management
 
-### 8.1 Flaky Test Prevention
+### 7.1 Flaky Test Prevention
 
 **Design Principles:**
+
 1. **Explicit waits** over implicit/sleep
 2. **Stable locators** (data-testid > CSS > XPath)
 3. **Independent tests** - no shared state between tests
 4. **Retry mechanisms** for network-dependent operations
 5. **Deterministic data** - avoid time-based assertions
 
-### 8.2 Flaky Test Detection
+### 7.2 Flaky Test Detection
 
 ```javascript
 // codecept.conf.js - Retry configuration
@@ -434,7 +358,7 @@ After(async () => {
 }
 ```
 
-### 8.3 Flaky Test Workflow
+### 7.3 Flaky Test Workflow
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -463,7 +387,7 @@ After(async () => {
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-### 8.4 Reliability Metrics
+### 7.4 Reliability Metrics
 
 | Metric | Target | Action if Below |
 |--------|--------|-----------------|
@@ -474,9 +398,9 @@ After(async () => {
 
 ---
 
-## 9. Blended Performance Testing
+## 8. Blended Performance Testing
 
-### 9.1 Performance Testing Approach
+### 8.1 Performance Testing Approach
 
 Rather than separate performance testing tools, we implement **blended performance checks** within functional tests:
 
@@ -503,7 +427,7 @@ Rather than separate performance testing tools, we implement **blended performan
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-### 9.2 Implementation Example
+### 8.2 Implementation Example
 
 ```gherkin
 @performance @api
@@ -528,7 +452,7 @@ Then('the API response time should be less than {int} ms', async (maxMs) => {
 });
 ```
 
-### 9.3 Performance Thresholds
+### 8.3 Performance Thresholds
 
 | Operation | Threshold | Severity |
 |-----------|-----------|----------|
@@ -538,14 +462,16 @@ Then('the API response time should be less than {int} ms', async (maxMs) => {
 | Page Load - Home | < 5000ms | Warning |
 | Page Load - Products | < 6000ms | Warning |
 
-### 9.4 When to Use Dedicated Performance Tools
+### 8.4 When to Use Dedicated Performance Tools
 
 Blended testing is suitable for:
+
 - ✅ Response time baselines
 - ✅ Performance regression detection
 - ✅ Single-user scenarios
 
 Use dedicated tools (k6, JMeter, Gatling) for:
+
 - ❌ Load testing (concurrent users)
 - ❌ Stress testing (breaking point)
 - ❌ Soak testing (extended duration)
@@ -553,9 +479,9 @@ Use dedicated tools (k6, JMeter, Gatling) for:
 
 ---
 
-## 10. Trade-offs & Assumptions
+## 9. Trade-offs & Assumptions
 
-### 10.1 Key Trade-offs
+### 9.1 Key Trade-offs
 
 | Decision | Trade-off | Rationale |
 |----------|-----------|-----------|
@@ -565,7 +491,7 @@ Use dedicated tools (k6, JMeter, Gatling) for:
 | API-only mode | Less realistic | 10x faster feedback |
 | Blended perf tests | Not load testing | Simpler infrastructure |
 
-### 10.2 Assumptions
+### 9.2 Assumptions
 
 1. **Target application** remains relatively stable (no major rewrites)
 2. **API contracts** are documented and versioned
@@ -573,7 +499,7 @@ Use dedicated tools (k6, JMeter, Gatling) for:
 4. **Teams** have basic JavaScript/TypeScript knowledge
 5. **CI/CD infrastructure** supports parallel execution
 
-### 10.3 Risks & Mitigations
+### 9.3 Risks & Mitigations
 
 | Risk | Impact | Mitigation |
 |------|--------|------------|
@@ -584,7 +510,7 @@ Use dedicated tools (k6, JMeter, Gatling) for:
 
 ---
 
-## 11. Future Improvements
+## 10. Future Improvements
 
 - [ ] Visual regression testing integration
 - [ ] Enhanced Allure reporting with trends
@@ -596,14 +522,13 @@ Use dedicated tools (k6, JMeter, Gatling) for:
 - [ ] Self-healing locators
 - [ ] Chaos engineering integration
 - [ ] Production monitoring correlation
-- [ ] ML-based flaky test prediction
 - [ ] Test impact analysis for PRs
 
 ---
 
-## 12. Appendix
+## 11. Appendix
 
-### 12.1 Quick Reference Commands
+### 11.1 Quick Reference Commands
 
 ```bash
 # Run smoke tests
@@ -622,7 +547,7 @@ pnpm e2e:parallel local:@regression:chromeHeadless:playwright 4
 docker-compose up --build
 ```
 
-### 12.2 Tag Reference
+### 11.2 Tag Reference
 
 | Tag | Purpose |
 |-----|---------|
@@ -635,15 +560,15 @@ docker-compose up --build
 | `@flaky` | Quarantined tests |
 | `@wip` | Work in progress |
 
-### 12.3 Contact & Support
+### 11.3 Contact & Support
 
 - **Framework Issues:** Create GitHub issue with `framework` label
 - **Test Failures:** Check Allure report, review traces
-- **New Feature Requests:** Discuss in #qa-automation channel
+- **New Feature Requests:** Contact owner
 
 ---
 
-### 12.4 Current Test Results (Smoke Suite)
+### 11.4 Current Test Results
 
 | Metric | Value |
 |--------|-------|
@@ -657,6 +582,6 @@ docker-compose up --build
 
 ---
 
-*Document Version: 1.1*  
+*Document Version: 1.3*  
 *Last Updated: June 2026*  
 *Owner: Akhil Srinivas :p*
