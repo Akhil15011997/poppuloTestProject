@@ -4,9 +4,17 @@
 
 This document provides visual representations of the test automation framework architecture, component relationships, and execution flows.
 
+The architecture shown here describes the **test framework**, not the verified internal architecture of the target system. The target website (`automationexercise.com`) is treated as a black-box dependency.
+
 ---
 
 ## 1. High-Level Architecture
+
+### 1.1 Scope Note: External System Topology
+
+- Internal implementation details of the target system are unknown (for example, monolith vs microservices).
+- The framework interacts through public UI and API surfaces only.
+- Any monolith/microservices references in planning are capability guidance, not assertions about AutomationExercise internals.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -353,79 +361,48 @@ e2e/
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                         CI/CD PIPELINE ARCHITECTURE                          │
+│                REPOSITORY-ACCURATE CI/CD WORKFLOW TOPOLOGY                │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                              │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                         TRIGGER                                      │   │
-│  │  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐               │   │
-│  │  │   PR    │  │  Push   │  │  Manual │  │  Cron   │               │   │
-│  │  │ Created │  │ to main │  │ Trigger │  │ Schedule│               │   │
-│  │  │         │  │         │  │         │  │ (daily) │               │   │
-│  │  └────┬────┘  └────┬────┘  └────┬────┘  └────┬────┘               │   │
-│  │       │            │            │            │                      │   │
-│  │       │            └─────┬──────┴────────────┘                      │   │
-│  │       │                  │                                          │   │
-│  │       ▼                  ▼                                          │   │
-│  │  pr-checks.yml      e2e-all.yml                                    │   │
-│  │  (Lint+API smoke)   (Full E2E)                                     │   │
-│  └──────────────────────────┼──────────────────────────────────────────┘   │
-│                             │                                                │
-│                             ▼                                                │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                         GITHUB ACTIONS                               │   │
-│  │                                                                       │   │
-│  │  ┌─────────────────────────────────────────────────────────────┐    │   │
-│  │  │  Job: Setup                                                  │    │   │
-│  │  │  • Checkout code                                             │    │   │
-│  │  │  • Setup Node.js                                             │    │   │
-│  │  │  • Install pnpm                                              │    │   │
-│  │  │  • Cache dependencies                                        │    │   │
-│  │  └─────────────────────────────┬───────────────────────────────┘    │   │
-│  │                                │                                      │   │
-│  │                                ▼                                      │   │
-│  │  ┌─────────────────────────────────────────────────────────────┐    │   │
-│  │  │  Job: Lint & Type Check                                      │    │   │
-│  │  │  • ESLint                                                    │    │   │
-│  │  │  • Prettier                                                  │    │   │
-│  │  └─────────────────────────────┬───────────────────────────────┘    │   │
-│  │                                │                                      │   │
-│  │                                ▼                                      │   │
-│  │  ┌─────────────────────────────────────────────────────────────┐    │   │
-│  │  │  Job: API Tests (Parallel)                                   │    │   │
-│  │  │  • PROFILE=local:@api:apiOnly:playwright                     │    │   │
-│  │  │  • No browser needed                                         │    │   │
-│  │  │  • ~2 minutes                                                │    │   │
-│  │  └─────────────────────────────┬───────────────────────────────┘    │   │
-│  │                                │                                      │   │
-│  │                                ▼                                      │   │
-│  │  ┌─────────────────────────────────────────────────────────────┐    │   │
-│  │  │  Job: E2E Tests (Matrix)                                     │    │   │
-│  │  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐          │    │   │
-│  │  │  │  Chromium   │  │   Firefox   │  │   WebKit    │          │    │   │
-│  │  │  │  @smoke     │  │   @smoke    │  │   @smoke    │          │    │   │
-│  │  │  └─────────────┘  └─────────────┘  └─────────────┘          │    │   │
-│  │  └─────────────────────────────┬───────────────────────────────┘    │   │
-│  │                                │                                      │   │
-│  │                                ▼                                      │   │
-│  │  ┌─────────────────────────────────────────────────────────────┐    │   │
-│  │  │  Job: Generate Reports                                       │    │   │
-│  │  │  • Merge Allure results                                      │    │   │
-│  │  │  • Generate HTML report                                      │    │   │
-│  │  │  • Upload artifacts                                          │    │   │
-│  │  └─────────────────────────────┬───────────────────────────────┘    │   │
-│  │                                │                                      │   │
-│  └────────────────────────────────┼────────────────────────────────────┘   │
-│                                   │                                          │
-│                                   ▼                                          │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                         ARTIFACTS                                    │   │
-│  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐                 │   │
-│  │  │   Allure    │  │  JUnit XML  │  │ Screenshots │                 │   │
-│  │  │   Report    │  │   Results   │  │  & Traces   │                 │   │
-│  │  └─────────────┘  └─────────────┘  └─────────────┘                 │   │
-│  └─────────────────────────────────────────────────────────────────────┘   │
-│                                                                              │
+│                                                                             │
+│  Triggers                                                                   │
+│  ┌────────────────────┐  ┌────────────────────┐  ┌──────────────────────┐  │
+│  │ pull_request/push  │  │ push main/develop  │  │ schedule/workflow    │  │
+│  │ (main/master/dev)  │  │ + Dockerfile/pnpm  │  │ dispatch             │  │
+│  └─────────┬──────────┘  └─────────┬──────────┘  └─────────┬────────────┘  │
+│            │                       │                        │               │
+│            ▼                       ▼                        ▼               │
+│  ┌────────────────────┐  ┌────────────────────┐  ┌──────────────────────┐  │
+│  │ pr-checks.yml      │  │ docker-build.yml   │  │ e2e-scheduled.yml    │  │
+│  │ lint + syntax      │  │ build/push GHCR    │  │ smoke/reg/full/api   │  │
+│  │ + API smoke        │  │ e2e image          │  │ via matrix suites    │  │
+│  └────────────────────┘  └────────────────────┘  └──────────────────────┘  │
+│                                                                             │
+│  Push to main (e2e/workflow paths) or manual dispatch                       │
+│            │                                                                 │
+│            ▼                                                                 │
+│  ┌────────────────────────────────────────────────────────────────────────┐  │
+│  │ e2e-all.yml                                                           │  │
+│  │ - determine suites: @auth @products @cart @api                       │  │
+│  │ - run matrix suites via .github/actions/run-e2e-tests                │  │
+│  │ - default mode: Docker (uses GHCR image)                             │  │
+│  │ - aggregate artifacts + publish Allure                                │  │
+│  └────────────────────────────────────────────────────────────────────────┘  │
+│                                                                             │
+│  Manual/sync reusable run path                                              │
+│            │                                                                 │
+│            ▼                                                                 │
+│  ┌────────────────────────────────────────────────────────────────────────┐  │
+│  │ e2e-suite.yml                                                         │  │
+│  │ - single suite with env/suite/browser inputs                          │  │
+│  │ - workflow_call entry for orchestration                               │  │
+│  │ - uploads artifacts + attempts Allure publish                         │  │
+│  └────────────────────────────────────────────────────────────────────────┘  │
+│                                                                             │
+│  Shared outputs                                                             │
+│  ┌───────────────────────────────┐  ┌───────────────────────────────────┐  │
+│  │ GitHub Artifacts              │  │ GitHub Pages (Allure report)      │  │
+│  │ e2e/output, allure-results    │  │ gh-pages publish path             │  │
+│  └───────────────────────────────┘  └───────────────────────────────────┘  │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
