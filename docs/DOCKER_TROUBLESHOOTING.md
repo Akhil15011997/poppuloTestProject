@@ -94,6 +94,44 @@ open http://localhost:5050
 
 **Note:** The report server serves static HTML files. Make sure tests have completed and generated the report before starting the server.
 
+## Stale Allure Report Showing at localhost:5050
+
+### Symptom
+
+After deleting `allure-report/` or `allure-results/` locally, you still see old test results when visiting `http://localhost:5050` — including results from previous test runs (e.g., email tests) that you didn't just run.
+
+### Cause
+
+The `allure-report` service in `docker-compose.yml` is an `nginx:alpine` container that mounts `./allure-report` as a **read-only volume at startup**:
+
+```yaml
+allure-report:
+  image: nginx:alpine
+  ports:
+    - "5050:80"
+  volumes:
+    - ./allure-report:/usr/share/nginx/html:ro
+```
+
+Deleting files locally **does not affect a running container** — the volume bind only takes effect when the container starts. If the nginx container is still running, it continues to serve whatever was mounted when it last started.
+
+### Solution
+
+Stop the container, clear the directory, then restart:
+
+```bash
+# Stop the allure-report container
+docker-compose down
+
+# Ensure allure-report directory is empty or regenerated
+rm -rf allure-report && mkdir -p allure-report
+
+# Restart only the report server
+docker-compose up -d allure-report
+```
+
+The server will now reflect the current (empty or updated) state of `./allure-report`.
+
 ## Cleaning Up Docker Resources
 
 To prevent memory overload, regularly clean up unused Docker resources.
