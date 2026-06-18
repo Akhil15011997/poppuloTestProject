@@ -4,6 +4,8 @@
 
 This document outlines the comprehensive test strategy for the AutomationExercise e-commerce platform, covering test design principles, architecture decisions, CI/CD integration, and scaling considerations for multi-team adoption.
 
+The target website is tested as a **black-box system**. Internal implementation details (for example, whether the backend is monolithic or microservices-based) are not assumed unless verified.
+
 ---
 
 ## 1. Overall Test Strategy
